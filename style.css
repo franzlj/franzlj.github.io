@@ -70,21 +70,21 @@ footer { margin-top: 48px; color: var(--muted); }
 /* Profil: 3D-Baum zwischen Navigation und Profilbild */
 .tree-stage {
   max-width: 960px;
-  height: clamp(220px, 42vw, 420px);
-  margin: 8px auto 0;
+  height: clamp(200px, 36vw, 360px);
+  margin: 0 auto;
   padding: 0 16px;
 }
 .tree-stage canvas { display: block; width: 100%; height: 100%; }
 /* Parallax: Der Inhalt schiebt sich beim Scrollen über das Modell (Versatz per JS) */
 body:has(.tree-stage) { overflow-x: clip; }
 .tree-stage { position: relative; z-index: 0; will-change: transform; }
-.tree-stage + main { position: relative; z-index: 1; padding-top: 32px; }
+.tree-stage + main { position: relative; z-index: 1; padding-top: 12px; }
 .tree-stage + main::before {
   content: "";
   position: absolute;
   z-index: -1;
   inset: 0 calc(50% - 50vw);
-  background: linear-gradient(to bottom, transparent, var(--bg) 40px);
+  background: linear-gradient(to bottom, transparent, var(--bg) 28px);
 }
 @media (prefers-reduced-motion: reduce) { .site-nav a { transition: none; } }
 

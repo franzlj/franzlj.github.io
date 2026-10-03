@@ -207,10 +207,11 @@ function init() {
 
   // ---------- Kamera: Scrollfortschritt -> Kugelkoordinaten ----------
   const box = new THREE.Box3().setFromObject(tree);
-  const target = new THREE.Vector3(0, box.max.y * 0.5, 0);
+  const center = new THREE.Vector3(0, box.max.y * 0.5, 0);
+  const target = new THREE.Vector3();
   const corners = [];
   for (const x of [box.min.x, box.max.x]) for (const y of [0, box.max.y]) for (const z of [box.min.z, box.max.z]) {
-    corners.push(new THREE.Vector3(x, y, z).sub(target));
+    corners.push(new THREE.Vector3(x, y, z).sub(center));
   }
   const fwd = new THREE.Vector3(), right = new THREE.Vector3(), up = new THREE.Vector3();
 
@@ -223,13 +224,16 @@ function init() {
     fwd.copy(dir).negate();
     right.crossVectors(fwd, camera.up).normalize();
     up.crossVectors(right, fwd);
-    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.96;
+    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.98;
     const tanH = tanV * camera.aspect;
     let d = 0;
     for (const c of corners) {
       const depth = c.dot(dir);
       d = Math.max(d, depth + Math.abs(c.dot(right)) / tanH, depth + Math.abs(c.dot(up)) / tanV);
     }
+    // Beim Scrollen näher heran und mit dem Blick etwas in die Krone
+    d *= lerp(1, 0.68, e);
+    target.copy(center).setY(center.y * lerp(1, 1.22, e));
     camera.position.copy(target).addScaledVector(dir, d);
     camera.lookAt(target);
     if (scene.fog) { scene.fog.near = d - 1; scene.fog.far = d + 6; }
