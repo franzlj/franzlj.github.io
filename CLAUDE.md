@@ -1,0 +1,39 @@
+# CLAUDE.md
+
+Persönliche Website von Franz, ausgeliefert über GitHub Pages (https://franzlj.github.io).
+Reines HTML/CSS/JS, kein Build-Schritt, keine Abhängigkeiten. Jeder Push auf `main` wird
+automatisch veröffentlicht (Deploy from branch, Root `/`). Änderungen daher per Branch und PR.
+
+## Struktur
+
+```
+index.html          Profil-Startseite
+style.css           Gemeinsames Stylesheet (Farb-Tokens, Hell/Dunkel, Navigation)
+apps/index.html     Übersicht der Mini-Apps
+apps/<name>/        Eine Mini-App pro Ordner
+```
+
+## Mini-App hinzufügen
+
+1. Ordner `apps/<name>/` anlegen (Kleinbuchstaben, Bindestriche). Einstieg ist `index.html`,
+   eigenes CSS/JS daneben (z. B. `app.css`, `app.js`). Vorlage: `apps/ladezeit/`.
+2. Im `<head>` `../../style.css` einbinden, damit Farben, Schrift und Dark Mode übereinstimmen.
+   App-spezifisches CSS nutzt die Tokens `--bg`, `--fg`, `--muted`, `--accent`.
+3. Die Navigation aus den anderen Seiten übernehmen, mit relativen Links
+   (`../../` = Profil, `../` = Mini-Apps, dort `aria-current="page"`).
+4. In `apps/index.html` einen Eintrag in `.app-list` ergänzen (Link + ein Satz Beschreibung).
+
+## Regeln
+
+- Nur statische Dateien: kein Build-Tool, kein Framework, kein Server-Code.
+- Relative Pfade verwenden, keine absoluten (`/...`).
+- Externe Bibliotheken nur, wenn nötig, dann per CDN mit fester Version.
+- Keine Secrets oder API-Keys im Code; alles ist öffentlich.
+- Daten nur im Browser halten (z. B. `localStorage`), es gibt kein Backend.
+- Seiten müssen auf Mobilgeräten funktionieren (Viewport-Meta, kein horizontales Scrollen).
+- Sprache der Inhalte: Deutsch.
+
+## Neue Hauptsektion
+
+Weitere Sektion analog zu `apps/` als eigener Ordner mit `index.html` anlegen und den Link in
+die `.site-nav` aller Seiten aufnehmen.

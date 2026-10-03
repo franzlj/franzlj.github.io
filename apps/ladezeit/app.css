@@ -1,0 +1,11 @@
+#calc { display: grid; gap: 12px; margin-top: 24px; }
+#calc label { display: grid; gap: 4px; color: var(--muted); }
+#calc input {
+  font: inherit;
+  padding: 6px 8px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+}
+.result { font-size: 1.25rem; margin-top: 24px; }

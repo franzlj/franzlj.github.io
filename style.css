@@ -30,3 +30,22 @@ h2 { font-size: 1.1rem; margin-top: 40px; }
 .tagline { color: var(--muted); margin: 0; }
 a { color: var(--accent); }
 footer { margin-top: 48px; color: var(--muted); }
+
+/* Navigation */
+.site-nav {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 16px 0;
+  display: flex;
+  gap: 20px;
+}
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
+.site-nav + main { padding-top: 40px; }
+
+/* Mini-Apps-Übersicht */
+.app-list { list-style: none; padding: 0; margin: 0; }
+.app-list li { padding: 12px 0; border-bottom: 1px solid color-mix(in srgb, var(--muted) 30%, transparent); }
+.app-list a { font-weight: 600; }
+.app-list p { margin: 4px 0 0; color: var(--muted); }
