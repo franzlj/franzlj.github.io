@@ -33,6 +33,7 @@ apps/<name>/        Eine Mini-App pro Ordner
 - Daten nur im Browser halten (z. B. `localStorage`), es gibt kein Backend.
 - Seiten müssen auf Mobilgeräten funktionieren (Viewport-Meta, kein horizontales Scrollen).
 - Sprache der Inhalte: Deutsch.
+- PRs immer per Merge-Commit mergen (`--no-ff`, GitHub: „Create a merge commit“), nie Squash oder Rebase.
 
 ## Neue Hauptsektion
 
