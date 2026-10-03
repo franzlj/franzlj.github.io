@@ -79,30 +79,31 @@ const HALF_W = 0.925;
 const AXLES = [1.53, -1.326];
 const WHEEL_R = 0.355;
 const ARCH_R = 0.405;
-const TRACK = 0.80;
+const TRACKS = [0.80, 0.815]; // halbe Spurweite vorn/hinten (1601/1630 mm)
 
 // Mittellinie oben: Front, Motorhaube, Frontscheibe, Dach, Fastback, Heckklappe
 const top = spline([
-  [2.39, 0.66], [2.33, 0.75], [2.2, 0.8], [1.8, 0.85], [1.4, 0.89], [0.95, 0.95],
+  [2.39, 0.64], [2.33, 0.735], [2.2, 0.79], [1.8, 0.845], [1.4, 0.885], [0.95, 0.945],
   [0.6, 1.17], [0.25, 1.37], [-0.05, 1.43], [-0.45, 1.42], [-0.9, 1.35],
   [-1.35, 1.22], [-1.8, 1.08], [-2.15, 1.02], [-2.3, 1.01], [-2.39, 0.95],
 ]);
 // Schulter-/Gürtellinie, steigt leicht nach hinten
 const shoulder = spline([
-  [2.39, 0.64], [2.3, 0.73], [2.1, 0.79], [1.6, 0.84], [1.0, 0.92], [0, 0.96],
+  [2.39, 0.6], [2.3, 0.7], [2.1, 0.77], [1.6, 0.84], [1.0, 0.92], [0, 0.96],
   [-1.2, 0.99], [-2.0, 0.99], [-2.3, 0.97], [-2.39, 0.93],
 ]);
 const bottomBase = spline([
-  [2.39, 0.26], [2.2, 0.2], [1.9, 0.17], [-1.9, 0.17], [-2.2, 0.24], [-2.39, 0.34],
+  [2.39, 0.24], [2.2, 0.17], [1.9, 0.14], [-1.9, 0.14], [-2.2, 0.22], [-2.39, 0.34],
 ]);
 const glassHalfW = spline([[-2.39, 0.46], [-1.7, 0.5], [-0.6, 0.56], [0.4, 0.57], [1.0, 0.6]]);
 
 function halfWidth(x) {
   let w = HALF_W;
   // Grundriss: abgerundete Ecken, an den Enden bleibt eine flache Stirnfläche
-  if (x > 1.72) { const t = (x - 1.72) / (HALF_L - 1.72); w *= 0.6 + 0.4 * Math.pow(1 - Math.pow(t, 2.2), 1 / 2.2); }
+  if (x > 1.72) { const t = (x - 1.72) / (HALF_L - 1.72); w *= 0.5 + 0.5 * Math.pow(1 - Math.pow(t, 2), 1 / 2); }
   if (x < -1.8) { const t = (-1.8 - x) / (HALF_L - 1.8); w *= 0.66 + 0.34 * Math.pow(1 - Math.pow(t, 2.6), 1 / 2.6); }
-  w += 0.02 * (bump(x - AXLES[0], 0.62) + bump(x - AXLES[1], 0.7));
+  // ausgestellte Kotflügel, hinten kräftiger (breitere Spur)
+  w += 0.026 * bump(x - AXLES[0], 0.6) + 0.036 * bump(x - AXLES[1], 0.72);
   return Math.max(0, w);
 }
 
@@ -119,14 +120,15 @@ function bottom(x) {
 function sectionControl(x) {
   const w = halfWidth(x), b = bottom(x), sh = shoulder(x), tp = top(x);
   const s = Math.min(1, w / 0.5);
-  const shelf = w - 0.07 * s;
+  const shelf = w - 0.085 * s;
   const g = Math.min(glassHalfW(x), shelf - 0.05) * s;
   const gh = smoothstep(0.05, 0.24, tp - sh);
   const hood6 = [w * 0.55, lerp(sh, tp, 0.82)], hood7 = [w * 0.25, lerp(sh, tp, 0.97)];
   const glass6 = [g, tp - 0.075], glass7 = [g * 0.5, tp - 0.012];
   return [
-    [0, b], [w * 0.6, b], [w - 0.035 * s, b + 0.045 * s], [w, lerp(b, sh, 0.5)],
-    [w - 0.012 * s, sh - 0.06 * s], [shelf, sh],
+    // Schweller eingezogen, größte Breite auf Radmitte, darüber Schulter und Tumblehome
+    [0, b], [w * 0.62, b], [w - 0.06 * s, b + 0.035 * s], [w, lerp(b, sh, 0.42)],
+    [w - 0.025 * s, sh - 0.055 * s], [shelf, sh],
     [lerp(hood6[0], glass6[0], gh), lerp(hood6[1], glass6[1], gh)],
     [lerp(hood7[0], glass7[0], gh), lerp(hood7[1], glass7[1], gh)],
     [0, tp],
@@ -277,61 +279,68 @@ function init() {
   const both = (poly, view, kind, opt) => { draw(poly, view, kind, opt); draw(mirrorZ(poly), view, kind, opt); };
   const sides = (poly, kind, opt) => { draw(poly, 'right', kind, opt); draw(poly, 'left', kind, opt); };
 
-  // Front: geschlossene Niere aus zwei großen Segmenten
-  const kidney = roundedPoly([[0.035, 0.775], [0.29, 0.785], [0.335, 0.43], [0.035, 0.405]], [0.05, 0.07, 0.09, 0.05]);
+  // Front: große, tief heruntergezogene Niere aus zwei Segmenten, oben geschlossen,
+  // unten schwarze Fläche mit Wabenmuster; Rahmen in Mattchrom
+  const kidney = roundedPoly([[0.03, 0.795], [0.27, 0.795], [0.31, 0.355], [0.03, 0.335]], [0.05, 0.07, 0.09, 0.05]);
   both(kidney, 'front', 'line', { closed: true });
-  both(inset(kidney, 0.185, 0.6, 0.86), 'front', 'line', { closed: true });
-  for (let k = 1; k <= 6; k++) { // geschlossene Fläche mit Querrippen
-    const y = lerp(0.45, 0.74, k / 7);
-    both([[0.07, y], [0.28 + (0.74 - y) * 0.08, y + 0.004]], 'front', 'line');
+  both(inset(kidney, 0.165, 0.565, 0.88), 'front', 'line', { closed: true });
+  both([[0.06, 0.49], [0.28, 0.5]], 'front', 'line');
+  for (let k = 0; k < 7; k++) { // Waben als Rautengitter
+    const z = 0.06 + k * 0.034;
+    both([[z, 0.39], [z + 0.034, 0.47]], 'front', 'line', { step: 0.02 });
+    both([[z + 0.034, 0.39], [z, 0.47]], 'front', 'line', { step: 0.02 });
   }
-  // Schlanke Scheinwerfer mit Tagfahrlicht-Signatur
-  const lamp = roundedPoly([[0.37, 0.79], [0.80, 0.805], [0.84, 0.75], [0.39, 0.725]], [0.02, 0.04, 0.03, 0.02], 3);
+  // Schlanke Scheinwerfer: innen an der Nierenecke, außen ansteigend um die Ecke gezogen
+  const lamp = roundedPoly([[0.32, 0.785], [0.8, 0.815], [0.86, 0.765], [0.35, 0.735]], [0.015, 0.05, 0.03, 0.015], 3);
   both(lamp, 'front', 'line', { closed: true, step: 0.02 });
-  both([[0.42, 0.765], [0.56, 0.772], [0.57, 0.742]], 'front', 'accent', { step: 0.015 });
-  both([[0.60, 0.775], [0.76, 0.785], [0.78, 0.752]], 'front', 'accent', { step: 0.015 });
-  // M-Sport-Schürze: große seitliche Lufteinlässe, Air Curtains, unterer Einlass
-  const intake = roundedPoly([[0.52, 0.56], [0.86, 0.6], [0.88, 0.27], [0.58, 0.23]], 0.05);
+  both([[0.36, 0.752], [0.82, 0.782]], 'front', 'line', { step: 0.02 });
+  for (const z of [0.5, 0.64]) { // zwei vertikale, pfeilförmige Tagfahrlicht-Elemente
+    both([[z + 0.02, 0.805], [z - 0.015, 0.775], [z + 0.02, 0.75]], 'front', 'accent', { step: 0.01 });
+  }
+  // M-Sport-Schürze: große seitliche Lufteinlässe mit Air Curtains, breiter unterer Einlass
+  const intake = roundedPoly([[0.5, 0.58], [0.8, 0.62], [0.86, 0.3], [0.56, 0.22]], [0.05, 0.06, 0.05, 0.04]);
   both(intake, 'front', 'line', { closed: true });
-  both([[0.69, 0.585], [0.72, 0.245]], 'front', 'line');
-  both([[0.84, 0.66], [0.87, 0.62]], 'front', 'line');
-  const lower = roundedPoly([[-0.44, 0.355], [0.44, 0.355], [0.48, 0.22], [-0.48, 0.22]], 0.04);
+  both([[0.53, 0.42], [0.83, 0.45]], 'front', 'line');
+  both([[0.865, 0.64], [0.885, 0.42]], 'front', 'line');
+  const lower = roundedPoly([[-0.42, 0.315], [0.42, 0.315], [0.47, 0.2], [-0.47, 0.2]], 0.035);
   draw(lower, 'front', 'line', { closed: true });
-  draw([[-0.4, 0.29], [0.4, 0.29]], 'front', 'line');
-  draw(roundedPoly([[-0.26, 0.39], [0.26, 0.39], [0.26, 0.365], [-0.26, 0.365]], 0.008, 1), 'front', 'line', { closed: true });
+  draw([[-0.43, 0.26], [0.43, 0.26]], 'front', 'line');
 
-  // Motorhaube: Powerdome-Linien
-  both([[1.0, 0.33], [1.5, 0.36], [2.15, 0.31]].map(([x, z]) => [x, z]), 'top', 'line');
+  // Motorhaube: Powerdome-Kanten laufen auf die Niere zu, äußere Kanten auf die Scheinwerfer
+  both([[0.95, 0.42], [1.6, 0.36], [2.22, 0.27]], 'top', 'line');
+  both([[1.0, 0.7], [1.7, 0.68], [2.18, 0.6]], 'top', 'line');
   // Frontscheibe, Dachkanten, Heckscheibe, Spoilerlippe
-  draw([[0.93, -0.7], [0.93, 0.7]], 'top', 'line');
-  draw([[0.27, -0.55], [0.27, 0.55]], 'top', 'line');
-  draw([[-0.85, -0.55], [-0.85, 0.55]], 'top', 'line');
-  draw([[-1.82, -0.62], [-1.82, 0.62]], 'top', 'line');
+  draw([[0.93, -0.66], [0.93, 0.66]], 'top', 'line');
+  draw([[0.27, -0.52], [0.27, 0.52]], 'top', 'line');
+  draw([[-0.85, -0.52], [-0.85, 0.52]], 'top', 'line');
+  draw([[-1.82, -0.6], [-1.82, 0.6]], 'top', 'line');
   draw([[-2.26, -0.78], [-2.26, 0.78]], 'top', 'line');
 
   // Seite: Fensterlinie mit Hofmeister-Knick, B-Säule, Türen, Griffe, Schweller
   const dlo = [[0.93, 0.975], [0.6, 1.16], [0.25, 1.34], [-0.25, 1.39], [-0.8, 1.335],
     [-1.18, 1.19], [-1.36, 1.07], [-1.27, 1.01], [-0.3, 0.985], [0.93, 0.975]];
   sides(dlo, 'line', { step: 0.025 });
-  sides([[-0.22, 0.99], [-0.25, 1.385]], 'line');
+  sides([[-0.22, 0.99], [-0.25, 1.385]], 'line');                             // B-Säule
+  sides([[-1.0, 1.29], [-1.07, 0.995]], 'line');                              // C-Säulen-Dreiecksfenster
   sides([[0.97, 0.94], [1.02, 0.7], [1.08, 0.5], [1.06, 0.3]], 'line');       // Tür vorn
   sides([[-0.22, 0.96], [-0.2, 0.3]], 'line');                                // Türfuge Mitte
-  sides([[-1.24, 0.98], [-1.1, 0.78], [-0.92, 0.64]], 'line');                // Tür hinten
+  sides([[-1.07, 0.98], [-0.98, 0.78], [-0.9, 0.66]], 'line');                // Tür hinten
   sides([[1.06, 0.3], [-0.9, 0.3]], 'line');                                  // Türunterkante
   sides([[0.32, 0.86], [0.12, 0.862]], 'line');                               // bündige Griffe
-  sides([[-0.72, 0.87], [-0.9, 0.872]], 'line');
-  sides([[1.95, 0.6], [1.15, 0.67], [-0.6, 0.73], [-1.9, 0.84]], 'line');     // Charakterlinie
+  sides([[-0.62, 0.875], [-0.8, 0.877]], 'line');
+  sides([[2.2, 0.76], [1.0, 0.85], [-1.0, 0.905], [-2.25, 0.9]], 'line');     // Schulterlinie
+  sides([[1.0, 0.45], [-0.1, 0.5], [-0.88, 0.6]], 'line');                    // ansteigende Sicke
   for (const a of AXLES) { // Radlauf-Kante
     const arc = [];
     for (let k = 0; k <= 16; k++) { const t = Math.PI * k / 16; arc.push([a + Math.cos(t) * (ARCH_R + 0.02), WHEEL_R + Math.sin(t) * (ARCH_R + 0.02)]); }
     sides(arc, 'line');
   }
-  sides([[1.08, 0.215], [-0.88, 0.215]], 'accent');                           // M-Seitenschweller
-  sides([[1.25, 0.66], [1.4, 0.69]], 'accent');                               // Air Breather
+  sides([[1.08, 0.19], [-0.88, 0.19]], 'accent');                             // M-Seitenschweller
 
   // Heck: schlanke L-Leuchten, Kennzeichenmulde, Diffusor
-  const tail = roundedPoly([[0.42, 0.955], [0.86, 0.93], [0.83, 0.87], [0.5, 0.9]], 0.015, 3);
+  const tail = roundedPoly([[0.36, 0.965], [0.88, 0.94], [0.9, 0.87], [0.62, 0.88], [0.57, 0.915], [0.38, 0.925]], 0.012, 3);
   both(tail, 'rear', 'accent', { closed: true, step: 0.015 });
+  both([[0.62, 0.9], [0.86, 0.89]], 'rear', 'accent', { step: 0.015 });
   draw(roundedPoly([[-0.26, 0.82], [0.26, 0.82], [0.26, 0.69], [-0.26, 0.69]], 0.02), 'rear', 'line', { closed: true });
   draw(roundedPoly([[-0.62, 0.42], [0.62, 0.42], [0.68, 0.3], [-0.68, 0.3]], 0.03), 'rear', 'line', { closed: true });
   for (const z of [-0.35, -0.12, 0.12, 0.35]) draw([[z, 0.4], [z, 0.32]], 'rear', 'line');
@@ -358,10 +367,10 @@ function init() {
   }
 
   // Räder: Reifen mit Laufflächen-Gitter, Felge mit fünf Doppelspeichen
-  for (const ax of AXLES) for (const side of [1, -1]) car.add(wheel(ax, side));
-  function wheel(x, side) {
+  AXLES.forEach((ax, i) => { for (const side of [1, -1]) car.add(wheel(ax, side, TRACKS[i])); });
+  function wheel(x, side, track) {
     const g = new THREE.Group();
-    g.position.set(x, WHEEL_R, side * TRACK);
+    g.position.set(x, WHEEL_R, side * track);
     const width = 0.245;
     const cyl = new THREE.Mesh(new THREE.CylinderGeometry(WHEEL_R, WHEEL_R, width, 40), mats.fill);
     cyl.rotation.x = Math.PI / 2;
@@ -469,11 +478,18 @@ function init() {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let goal = 0, current = 0, frame = 0, visible = true;
 
+  // Layout-Position ohne Parallax-Versatz, damit der Fortschritt nicht vom Transform abhängt
   function scrollProgress() {
     if (reduceMotion.matches) return 0.35;
-    const r = stage.getBoundingClientRect();
-    const end = Math.min(r.bottom + window.scrollY, document.documentElement.scrollHeight - window.innerHeight);
+    const bottomEdge = stage.offsetTop + stage.offsetHeight;
+    const end = Math.min(bottomEdge, document.documentElement.scrollHeight - window.innerHeight);
     return end > 1 ? clamp(window.scrollY / end) : 0;
+  }
+  // Modell scrollt langsamer als der Inhalt, der Inhalt schiebt sich darüber
+  const PARALLAX = 0.4;
+  function parallax() {
+    const y = reduceMotion.matches ? 0 : Math.min(window.scrollY, stage.offsetTop + stage.offsetHeight) * PARALLAX;
+    stage.style.transform = y ? `translate3d(0, ${y.toFixed(1)}px, 0)` : '';
   }
   function tick() {
     frame = 0;
@@ -484,7 +500,7 @@ function init() {
     if (current !== goal) requestRender();
   }
   function requestRender() { if (!frame && visible) frame = requestAnimationFrame(tick); }
-  function onScroll() { goal = scrollProgress(); requestRender(); }
+  function onScroll() { parallax(); goal = scrollProgress(); requestRender(); }
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight;
     if (!w || !h) return;
