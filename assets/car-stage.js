@@ -281,12 +281,12 @@ function init() {
 
   // Front (nach Referenzfotos): sehr große Niere aus zwei
   // Segmenten bis fast zur Unterkante, oben V-förmig zur Mitte abfallend, mit Querrippen
-  const kidney = roundedPoly([[0.025, 0.725], [0.3, 0.8], [0.36, 0.52], [0.33, 0.26], [0.025, 0.26]],
-    [0.03, 0.08, 0.14, 0.07, 0.03]);
+  const kidney = roundedPoly([[0.025, 0.7], [0.27, 0.765], [0.32, 0.54], [0.3, 0.33], [0.025, 0.33]],
+    [0.03, 0.07, 0.12, 0.06, 0.03]);
   both(kidney, 'front', 'line', { closed: true });
-  both(inset(kidney, 0.18, 0.52, 0.92), 'front', 'line', { closed: true });
-  const kidneyOuter = y => (y > 0.52 ? lerp(0.36, 0.3, (y - 0.52) / 0.28) : lerp(0.33, 0.36, (y - 0.26) / 0.26)) - 0.04;
-  for (let y = 0.32; y < 0.72; y += 0.055) both([[0.05, y], [kidneyOuter(y), y + 0.006]], 'front', 'line');
+  both(inset(kidney, 0.165, 0.54, 0.91), 'front', 'line', { closed: true });
+  const kidneyOuter = y => (y > 0.54 ? lerp(0.32, 0.27, (y - 0.54) / 0.225) : lerp(0.3, 0.32, (y - 0.33) / 0.21)) - 0.04;
+  for (let y = 0.38; y < 0.68; y += 0.05) both([[0.05, y], [kidneyOuter(y), y + 0.006]], 'front', 'line');
   // Emblem auf der Haubenspitze
   const roundel = (cy, r) => Array.from({ length: 20 }, (_, i) => [Math.cos(i / 20 * 2 * Math.PI) * r, cy + Math.sin(i / 20 * 2 * Math.PI) * r]);
   draw(roundel(0.785, 0.036), 'front', 'accent', { closed: true, step: 0.01 });
@@ -306,21 +306,21 @@ function init() {
   draw([[-0.82, 0.215], [0.82, 0.215]], 'front', 'line');
 
   // Motorhaube: V-förmige Kanten laufen auf das Emblem zu, äußere Kanten auf die Scheinwerfer
-  both([[0.95, 0.45], [1.6, 0.31], [2.2, 0.07]], 'top', 'line');
-  both([[1.0, 0.7], [1.7, 0.66], [2.15, 0.52]], 'top', 'line');
+  both([[1.08, 0.42], [1.6, 0.3], [2.2, 0.07]], 'top', 'line');
+  both([[1.1, 0.68], [1.7, 0.65], [2.15, 0.52]], 'top', 'line');
   // Frontscheibe, Dachkanten, Heckscheibe, Spoilerlippe
-  draw([[0.93, -0.66], [0.93, 0.66]], 'top', 'line');
-  draw([[0.27, -0.52], [0.27, 0.52]], 'top', 'line');
-  draw([[-0.85, -0.52], [-0.85, 0.52]], 'top', 'line');
-  draw([[-1.82, -0.6], [-1.82, 0.6]], 'top', 'line');
+  // Front- und Heckscheibe als umlaufende Rahmen, seitlich entlang der A- bzw. C-Säulen
+  draw([[0.93, -0.66], [0.6, -0.56], [0.27, -0.49], [0.27, 0.49], [0.6, 0.56], [0.93, 0.66]], 'top', 'line', { closed: true });
+  draw([[-0.85, -0.49], [-1.35, -0.53], [-1.82, -0.58], [-1.82, 0.58], [-1.35, 0.53], [-0.85, 0.49]], 'top', 'line', { closed: true });
   draw([[-2.26, -0.78], [-2.26, 0.78]], 'top', 'line');
 
   // Seite: Fensterlinie mit Hofmeister-Knick, B-Säule, Türen, Griffe, Schweller
-  const dlo = [[0.93, 0.975], [0.6, 1.16], [0.25, 1.34], [-0.25, 1.39], [-0.8, 1.335],
-    [-1.18, 1.19], [-1.36, 1.07], [-1.27, 1.01], [-0.3, 0.985], [0.93, 0.975]];
+  // Oberkante unterhalb der Dachwölbung, damit die Linie auf der Seitenscheibe bleibt
+  const dlo = [[0.93, 0.975], [0.6, 1.08], [0.25, 1.28], [-0.25, 1.33], [-0.8, 1.27],
+    [-1.18, 1.15], [-1.36, 1.06], [-1.27, 1.01], [-0.3, 0.985], [0.93, 0.975]];
   sides(dlo, 'line', { step: 0.025 });
-  sides([[-0.22, 0.99], [-0.25, 1.385]], 'line');                             // B-Säule
-  sides([[-1.0, 1.29], [-1.07, 0.995]], 'line');                              // C-Säulen-Dreiecksfenster
+  sides([[-0.22, 0.99], [-0.25, 1.33]], 'line');                             // B-Säule
+  sides([[-1.0, 1.22], [-1.07, 0.995]], 'line');                              // C-Säulen-Dreiecksfenster
   sides([[0.96, 0.95], [0.95, 0.3]], 'line');                                // Tür vorn
   sides([[1.085, 0.67], [1.05, 0.36]], 'line');                               // Air Breather hinter dem Vorderrad
   sides([[1.03, 0.67], [1.0, 0.38]], 'line');
