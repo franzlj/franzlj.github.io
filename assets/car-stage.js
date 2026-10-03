@@ -95,15 +95,15 @@ const shoulder = spline([
 const bottomBase = spline([
   [2.39, 0.24], [2.2, 0.17], [1.9, 0.14], [-1.9, 0.14], [-2.2, 0.22], [-2.39, 0.34],
 ]);
-const glassHalfW = spline([[-2.39, 0.46], [-1.7, 0.5], [-0.6, 0.56], [0.4, 0.57], [1.0, 0.6]]);
+const glassHalfW = spline([[-2.39, 0.52], [-1.7, 0.56], [-0.6, 0.58], [0.4, 0.58], [1.0, 0.6]]);
 
 function halfWidth(x) {
   let w = HALF_W;
   // Grundriss: abgerundete Ecken, an den Enden bleibt eine flache Stirnfläche
   if (x > 1.72) { const t = (x - 1.72) / (HALF_L - 1.72); w *= 0.5 + 0.5 * Math.pow(1 - Math.pow(t, 2), 1 / 2); }
-  if (x < -1.8) { const t = (-1.8 - x) / (HALF_L - 1.8); w *= 0.66 + 0.34 * Math.pow(1 - Math.pow(t, 2.6), 1 / 2.6); }
+  if (x < -1.8) { const t = (-1.8 - x) / (HALF_L - 1.8); w *= 0.62 + 0.38 * Math.pow(1 - Math.pow(t, 2.3), 1 / 2.3); }
   // ausgestellte Kotflügel, hinten kräftiger (breitere Spur)
-  w += 0.026 * bump(x - AXLES[0], 0.6) + 0.036 * bump(x - AXLES[1], 0.72);
+  w += 0.026 * bump(x - AXLES[0], 0.6) + 0.045 * bump(x - AXLES[1], 0.75);
   return Math.max(0, w);
 }
 
@@ -279,36 +279,35 @@ function init() {
   const both = (poly, view, kind, opt) => { draw(poly, view, kind, opt); draw(mirrorZ(poly), view, kind, opt); };
   const sides = (poly, kind, opt) => { draw(poly, 'right', kind, opt); draw(poly, 'left', kind, opt); };
 
-  // Front: große, tief heruntergezogene Niere aus zwei Segmenten, oben geschlossen,
-  // unten schwarze Fläche mit Wabenmuster; Rahmen in Mattchrom
-  const kidney = roundedPoly([[0.03, 0.795], [0.27, 0.795], [0.31, 0.355], [0.03, 0.335]], [0.05, 0.07, 0.09, 0.05]);
+  // Front (nach Referenzfotos): sehr große Niere aus zwei
+  // Segmenten bis fast zur Unterkante, oben V-förmig zur Mitte abfallend, mit Querrippen
+  const kidney = roundedPoly([[0.025, 0.725], [0.3, 0.8], [0.36, 0.52], [0.33, 0.26], [0.025, 0.26]],
+    [0.03, 0.08, 0.14, 0.07, 0.03]);
   both(kidney, 'front', 'line', { closed: true });
-  both(inset(kidney, 0.165, 0.565, 0.88), 'front', 'line', { closed: true });
-  both([[0.06, 0.49], [0.28, 0.5]], 'front', 'line');
-  for (let k = 0; k < 7; k++) { // Waben als Rautengitter
-    const z = 0.06 + k * 0.034;
-    both([[z, 0.39], [z + 0.034, 0.47]], 'front', 'line', { step: 0.02 });
-    both([[z + 0.034, 0.39], [z, 0.47]], 'front', 'line', { step: 0.02 });
-  }
-  // Schlanke Scheinwerfer: innen an der Nierenecke, außen ansteigend um die Ecke gezogen
-  const lamp = roundedPoly([[0.32, 0.785], [0.8, 0.815], [0.86, 0.765], [0.35, 0.735]], [0.015, 0.05, 0.03, 0.015], 3);
+  both(inset(kidney, 0.18, 0.52, 0.92), 'front', 'line', { closed: true });
+  const kidneyOuter = y => (y > 0.52 ? lerp(0.36, 0.3, (y - 0.52) / 0.28) : lerp(0.33, 0.36, (y - 0.26) / 0.26)) - 0.04;
+  for (let y = 0.32; y < 0.72; y += 0.055) both([[0.05, y], [kidneyOuter(y), y + 0.006]], 'front', 'line');
+  // Emblem auf der Haubenspitze
+  const roundel = (cy, r) => Array.from({ length: 20 }, (_, i) => [Math.cos(i / 20 * 2 * Math.PI) * r, cy + Math.sin(i / 20 * 2 * Math.PI) * r]);
+  draw(roundel(0.785, 0.036), 'front', 'accent', { closed: true, step: 0.01 });
+  // Schlanke Scheinwerfer: innen an der oberen Nierenecke, nach außen ansteigend
+  const lamp = roundedPoly([[0.33, 0.785], [0.83, 0.84], [0.875, 0.795], [0.36, 0.74]], [0.015, 0.05, 0.03, 0.015], 3);
   both(lamp, 'front', 'line', { closed: true, step: 0.02 });
-  both([[0.36, 0.752], [0.82, 0.782]], 'front', 'line', { step: 0.02 });
-  for (const z of [0.5, 0.64]) { // zwei vertikale, pfeilförmige Tagfahrlicht-Elemente
-    both([[z + 0.02, 0.805], [z - 0.015, 0.775], [z + 0.02, 0.75]], 'front', 'accent', { step: 0.01 });
+  for (const z of [0.43, 0.53]) { // zwei vertikale L-förmige Tagfahrlicht-Elemente
+    both([[z, 0.8], [z - 0.008, 0.758], [z + 0.045, 0.765]], 'front', 'accent', { step: 0.01 });
   }
-  // M-Sport-Schürze: große seitliche Lufteinlässe mit Air Curtains, breiter unterer Einlass
-  const intake = roundedPoly([[0.5, 0.58], [0.8, 0.62], [0.86, 0.3], [0.56, 0.22]], [0.05, 0.06, 0.05, 0.04]);
+  // M-Sport-Schürze: hohe seitliche Lufteinlässe mit Querstreben, Air Curtains außen, Lippe unten
+  const intake = roundedPoly([[0.42, 0.6], [0.7, 0.66], [0.8, 0.3], [0.46, 0.27]], 0.03);
   both(intake, 'front', 'line', { closed: true });
-  both([[0.53, 0.42], [0.83, 0.45]], 'front', 'line');
-  both([[0.865, 0.64], [0.885, 0.42]], 'front', 'line');
-  const lower = roundedPoly([[-0.42, 0.315], [0.42, 0.315], [0.47, 0.2], [-0.47, 0.2]], 0.035);
-  draw(lower, 'front', 'line', { closed: true });
-  draw([[-0.43, 0.26], [0.43, 0.26]], 'front', 'line');
+  for (const y of [0.37, 0.45, 0.53]) both([[0.45, y - 0.01], [0.76, y + 0.02]], 'front', 'line');
+  const curtain = roundedPoly([[0.85, 0.66], [0.885, 0.63], [0.895, 0.38], [0.865, 0.41]], 0.01, 2);
+  both(curtain, 'front', 'line', { closed: true, step: 0.02 });
+  for (const y of [0.46, 0.53, 0.6]) both([[0.855, y], [0.89, y]], 'front', 'line');
+  draw([[-0.82, 0.215], [0.82, 0.215]], 'front', 'line');
 
-  // Motorhaube: Powerdome-Kanten laufen auf die Niere zu, äußere Kanten auf die Scheinwerfer
-  both([[0.95, 0.42], [1.6, 0.36], [2.22, 0.27]], 'top', 'line');
-  both([[1.0, 0.7], [1.7, 0.68], [2.18, 0.6]], 'top', 'line');
+  // Motorhaube: V-förmige Kanten laufen auf das Emblem zu, äußere Kanten auf die Scheinwerfer
+  both([[0.95, 0.45], [1.6, 0.31], [2.2, 0.07]], 'top', 'line');
+  both([[1.0, 0.7], [1.7, 0.66], [2.15, 0.52]], 'top', 'line');
   // Frontscheibe, Dachkanten, Heckscheibe, Spoilerlippe
   draw([[0.93, -0.66], [0.93, 0.66]], 'top', 'line');
   draw([[0.27, -0.52], [0.27, 0.52]], 'top', 'line');
@@ -322,28 +321,36 @@ function init() {
   sides(dlo, 'line', { step: 0.025 });
   sides([[-0.22, 0.99], [-0.25, 1.385]], 'line');                             // B-Säule
   sides([[-1.0, 1.29], [-1.07, 0.995]], 'line');                              // C-Säulen-Dreiecksfenster
-  sides([[0.97, 0.94], [1.02, 0.7], [1.08, 0.5], [1.06, 0.3]], 'line');       // Tür vorn
+  sides([[0.96, 0.95], [0.95, 0.3]], 'line');                                // Tür vorn
+  sides([[1.085, 0.67], [1.05, 0.36]], 'line');                               // Air Breather hinter dem Vorderrad
+  sides([[1.03, 0.67], [1.0, 0.38]], 'line');
+  for (const y of [0.44, 0.52, 0.6]) sides([[1.075, y + 0.03], [1.01, y]], 'line');
   sides([[-0.22, 0.96], [-0.2, 0.3]], 'line');                                // Türfuge Mitte
   sides([[-1.07, 0.98], [-0.98, 0.78], [-0.9, 0.66]], 'line');                // Tür hinten
   sides([[1.06, 0.3], [-0.9, 0.3]], 'line');                                  // Türunterkante
   sides([[0.32, 0.86], [0.12, 0.862]], 'line');                               // bündige Griffe
   sides([[-0.62, 0.875], [-0.8, 0.877]], 'line');
-  sides([[2.2, 0.76], [1.0, 0.85], [-1.0, 0.905], [-2.25, 0.9]], 'line');     // Schulterlinie
+  sides([[1.95, 0.8], [1.0, 0.86], [-1.0, 0.9], [-2.3, 0.92]], 'line');      // Schulterlinie
+  sides([[-0.45, 0.76], [-1.3, 0.81], [-2.2, 0.77]], 'line');                 // Hüfte über dem Hinterrad
   sides([[1.0, 0.45], [-0.1, 0.5], [-0.88, 0.6]], 'line');                    // ansteigende Sicke
   for (const a of AXLES) { // Radlauf-Kante
     const arc = [];
     for (let k = 0; k <= 16; k++) { const t = Math.PI * k / 16; arc.push([a + Math.cos(t) * (ARCH_R + 0.02), WHEEL_R + Math.sin(t) * (ARCH_R + 0.02)]); }
     sides(arc, 'line');
   }
-  sides([[1.08, 0.19], [-0.88, 0.19]], 'accent');                             // M-Seitenschweller
+  sides([[1.08, 0.25], [-0.88, 0.235]], 'accent');                           // Schwellerleiste
+  sides([[1.08, 0.2], [-0.88, 0.19]], 'accent');
 
-  // Heck: schlanke L-Leuchten, Kennzeichenmulde, Diffusor
-  const tail = roundedPoly([[0.36, 0.965], [0.88, 0.94], [0.9, 0.87], [0.62, 0.88], [0.57, 0.915], [0.38, 0.925]], 0.012, 3);
+  // Heck: schlanke L-Leuchten bis auf die Klappe, Kennzeichen, Emblem, schwarze Schürze
+  const tail = roundedPoly([[0.27, 0.95], [0.88, 0.94], [0.905, 0.87], [0.64, 0.875], [0.3, 0.912]], 0.015, 3);
   both(tail, 'rear', 'accent', { closed: true, step: 0.015 });
-  both([[0.62, 0.9], [0.86, 0.89]], 'rear', 'accent', { step: 0.015 });
-  draw(roundedPoly([[-0.26, 0.82], [0.26, 0.82], [0.26, 0.69], [-0.26, 0.69]], 0.02), 'rear', 'line', { closed: true });
-  draw(roundedPoly([[-0.62, 0.42], [0.62, 0.42], [0.68, 0.3], [-0.68, 0.3]], 0.03), 'rear', 'line', { closed: true });
-  for (const z of [-0.35, -0.12, 0.12, 0.35]) draw([[z, 0.4], [z, 0.32]], 'rear', 'line');
+  both([[0.4, 0.928], [0.84, 0.918], [0.86, 0.885]], 'rear', 'accent', { step: 0.015 });
+  draw(roundedPoly([[-0.25, 0.89], [0.25, 0.89], [0.25, 0.78], [-0.25, 0.78]], 0.015), 'rear', 'line', { closed: true });
+  draw(roundel(0.96, 0.035), 'rear', 'accent', { closed: true, step: 0.01 });
+  both(roundedPoly([[0.6, 0.56], [0.86, 0.62], [0.9, 0.37], [0.68, 0.35]], 0.03), 'rear', 'line', { closed: true });
+  both([[0.67, 0.45], [0.86, 0.47]], 'rear', 'accent');                    // Reflektor
+  draw(roundedPoly([[-0.6, 0.4], [0.6, 0.4], [0.66, 0.22], [-0.66, 0.22]], 0.03), 'rear', 'line', { closed: true });
+  for (const z of [-0.42, -0.25, 0.25, 0.42]) draw([[z, 0.38], [z, 0.24]], 'rear', 'line');
 
   segments(feat.line, mats.line);
   segments(feat.accent, mats.accent);
@@ -353,15 +360,15 @@ function init() {
     const shape = new THREE.SphereGeometry(1, 8, 4);
     const m = new THREE.Mesh(shape, mats.fill);
     m.scale.set(0.1, 0.055, 0.09);
-    m.position.set(0.76, 1.02, side * 0.96);
+    m.position.set(0.86, 1.02, side * 0.95);
     m.rotation.y = side * 0.2;
     car.add(m);
     const wire = new THREE.LineSegments(new THREE.EdgesGeometry(shape, 1), mats.line);
     wire.scale.copy(m.scale); wire.position.copy(m.position); wire.rotation.copy(m.rotation);
     car.add(wire);
     const foot = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(0.8, 0.975, side * 0.86), new THREE.Vector3(0.78, 0.99, side * 0.93),
-      new THREE.Vector3(0.88, 0.955, side * 0.86), new THREE.Vector3(0.8, 0.985, side * 0.93),
+      new THREE.Vector3(0.9, 0.975, side * 0.85), new THREE.Vector3(0.88, 0.99, side * 0.92),
+      new THREE.Vector3(0.98, 0.955, side * 0.85), new THREE.Vector3(0.9, 0.985, side * 0.92),
     ]);
     car.add(new THREE.LineSegments(foot, mats.line));
   }
