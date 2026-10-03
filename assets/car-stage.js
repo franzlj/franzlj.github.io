@@ -280,16 +280,16 @@ function init() {
   const sides = (poly, kind, opt) => { draw(poly, 'right', kind, opt); draw(poly, 'left', kind, opt); };
 
   // Front (nach Referenzfotos): sehr große Niere aus zwei
-  // Segmenten bis fast zur Unterkante, oben V-förmig zur Mitte abfallend, mit Querrippen
-  const kidney = roundedPoly([[0.025, 0.7], [0.27, 0.765], [0.32, 0.54], [0.3, 0.33], [0.025, 0.33]],
-    [0.03, 0.07, 0.12, 0.06, 0.03]);
+  // Segmenten bis fast zur Unterkante, gerade Oberkante, mit Querrippen
+  const kidney = roundedPoly([[0.025, 0.76], [0.27, 0.765], [0.32, 0.54], [0.3, 0.33], [0.025, 0.33]],
+    [0.04, 0.07, 0.12, 0.06, 0.03]);
   both(kidney, 'front', 'line', { closed: true });
   both(inset(kidney, 0.165, 0.54, 0.91), 'front', 'line', { closed: true });
   const kidneyOuter = y => (y > 0.54 ? lerp(0.32, 0.27, (y - 0.54) / 0.225) : lerp(0.3, 0.32, (y - 0.33) / 0.21)) - 0.04;
   for (let y = 0.38; y < 0.68; y += 0.05) both([[0.05, y], [kidneyOuter(y), y + 0.006]], 'front', 'line');
   // Emblem auf der Haubenspitze
   const roundel = (cy, r) => Array.from({ length: 20 }, (_, i) => [Math.cos(i / 20 * 2 * Math.PI) * r, cy + Math.sin(i / 20 * 2 * Math.PI) * r]);
-  draw(roundel(0.785, 0.036), 'front', 'accent', { closed: true, step: 0.01 });
+  draw(roundel(0.805, 0.032), 'front', 'accent', { closed: true, step: 0.01 });
   // Schlanke Scheinwerfer: innen an der oberen Nierenecke, nach außen ansteigend
   const lamp = roundedPoly([[0.33, 0.785], [0.83, 0.84], [0.875, 0.795], [0.36, 0.74]], [0.015, 0.05, 0.03, 0.015], 3);
   both(lamp, 'front', 'line', { closed: true, step: 0.02 });
