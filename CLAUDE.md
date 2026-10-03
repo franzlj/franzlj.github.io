@@ -16,12 +16,13 @@ apps/<name>/        Eine Mini-App pro Ordner
 ## Mini-App hinzufügen
 
 1. Ordner `apps/<name>/` anlegen (Kleinbuchstaben, Bindestriche). Einstieg ist `index.html`,
-   eigenes CSS/JS daneben (z. B. `app.css`, `app.js`). Vorlage: `apps/ladezeit/`.
+   eigenes CSS/JS daneben (z. B. `app.css`, `app.js`). Vorlage: `apps/live-activities-studio/`.
 2. Im `<head>` `../../style.css` einbinden, damit Farben, Schrift und Dark Mode übereinstimmen.
    App-spezifisches CSS nutzt die Tokens `--bg`, `--fg`, `--muted`, `--accent`.
 3. Die Navigation aus den anderen Seiten übernehmen, mit relativen Links
    (`../../` = Profil, `../` = Mini-Apps, dort `aria-current="page"`).
-4. In `apps/index.html` einen Eintrag in `.app-list` ergänzen (Link + ein Satz Beschreibung).
+4. In `apps/index.html` eine Kachel in `.app-grid` ergänzen (`<li>` mit `a.app-tile`, darin
+   `.app-tile-title` und ein Satz in `.app-tile-desc`).
 
 ## Regeln
 

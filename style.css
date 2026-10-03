@@ -44,8 +44,29 @@ footer { margin-top: 48px; color: var(--muted); }
 .site-nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
 .site-nav + main { padding-top: 40px; }
 
-/* Mini-Apps-Übersicht */
-.app-list { list-style: none; padding: 0; margin: 0; }
-.app-list li { padding: 12px 0; border-bottom: 1px solid color-mix(in srgb, var(--muted) 30%, transparent); }
-.app-list a { font-weight: 600; }
-.app-list p { margin: 4px 0 0; color: var(--muted); }
+/* Mini-Apps-Übersicht: Kacheln */
+.app-grid {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+.app-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--muted) 6%, var(--bg));
+  color: var(--fg);
+  text-decoration: none;
+  transition: border-color .15s, transform .15s;
+}
+.app-tile:hover, .app-tile:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+.app-tile-title { font-weight: 600; color: var(--accent); }
+.app-tile-desc { color: var(--muted); font-size: .95rem; line-height: 1.45; }
+@media (prefers-reduced-motion: reduce) { .app-tile { transition: none; } .app-tile:hover { transform: none; } }
