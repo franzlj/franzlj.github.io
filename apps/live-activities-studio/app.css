@@ -16,7 +16,7 @@
   --code-bg:#0a0f13; color-scheme:dark } }
 
 /* Breiteres Layout als die übrigen Seiten */
-.site-nav{max-width:1500px}
+.site-nav{--nav-col:1532px}
 main.studio{max-width:none;padding:18px 16px 40px;font-size:14px;line-height:1.45}
 .studio h1,.studio h2,.studio h3{margin:0;text-wrap:balance}
 .studio button,.studio input,.studio select,.studio textarea{font:inherit;color:inherit}

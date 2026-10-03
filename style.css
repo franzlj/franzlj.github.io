@@ -3,6 +3,10 @@
   --fg: #1f2328;
   --muted: #59636e;
   --accent: #0969da;
+  /* Skill-Kategorien (GitHub-Primer-Palette) */
+  --cat-tech: #1a7f37;
+  --cat-method: #8250df;
+  --cat-discipline: #bf3989;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -10,6 +14,9 @@
     --fg: #e6edf3;
     --muted: #9198a1;
     --accent: #4493f8;
+    --cat-tech: #3fb950;
+    --cat-method: #ab7df8;
+    --cat-discipline: #db61a2;
   }
 }
 * { box-sizing: border-box; }
@@ -31,18 +38,82 @@ h2 { font-size: 1.1rem; margin-top: 40px; }
 a { color: var(--accent); }
 footer { margin-top: 48px; color: var(--muted); }
 
-/* Navigation */
+/* Navigation: gemeinsame Capsule, Hover blendet eingesetzte Capsule ein */
 .site-nav {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 16px 16px 0;
+  --nav-col: 640px;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 16px auto 0 max(16px, (100% - var(--nav-col)) / 2 + 16px);
+  padding: 4px;
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 6%, var(--bg));
 }
-.site-nav a { color: var(--muted); text-decoration: none; }
-.site-nav a:hover { color: var(--accent); }
+.site-nav a {
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background-color .15s, box-shadow .15s, color .15s;
+}
+.site-nav a:hover, .site-nav a:focus-visible {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--muted) 18%, var(--bg));
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .28);
+}
 .site-nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
 .site-nav + main { padding-top: 40px; }
+@media (prefers-reduced-motion: reduce) { .site-nav a { transition: none; } }
+
+/* Profil: Name mit GitHub-Icon */
+.name-row { display: flex; align-items: center; gap: 12px; margin: 24px 0 4px; }
+.name-row h1 { margin: 0; }
+.icon-link { display: inline-flex; color: var(--muted); opacity: .8; transition: color .15s, opacity .15s; }
+.icon-link:hover, .icon-link:focus-visible { color: var(--fg); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .icon-link { transition: none; } }
+
+/* Profil: Rollen und Skill-Tags, Farbe je Kategorie */
+.tagline.roles { color: var(--fg); font-weight: 500; }
+.tag-tech { --cat: var(--cat-tech); }
+.tag-method { --cat: var(--cat-method); }
+.tag-discipline { --cat: var(--cat-discipline); }
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tags li {
+  padding: 2px 11px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cat) 15%, var(--bg));
+  /* Text Richtung --fg gemischt: Kontrast >= 4.5:1 in Hell und Dunkel */
+  color: color-mix(in srgb, var(--cat) 75%, var(--fg));
+  font-size: .85rem;
+  font-weight: 500;
+}
+.tag-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: .8rem;
+}
+.tag-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--cat);
+}
 
 /* Mini-Apps-Übersicht: Kacheln */
 .app-grid {
