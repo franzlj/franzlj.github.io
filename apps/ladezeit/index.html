@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ladezeit-Rechner · Franz</title>
+  <meta name="description" content="Ladedauer eines E-Autos abschätzen">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main>
+    <h1>Ladezeit-Rechner</h1>
+    <p class="tagline">Grobe Abschätzung, ohne Ladekurve.</p>
+    <form id="calc">
+      <label>Akkukapazität (kWh netto)
+        <input type="number" id="capacity" value="60" min="1" step="0.1" required>
+      </label>
+      <label>Ladestand von (%)
+        <input type="number" id="from" value="20" min="0" max="100" required>
+      </label>
+      <label>Ladestand bis (%)
+        <input type="number" id="to" value="80" min="0" max="100" required>
+      </label>
+      <label>Ladeleistung (kW)
+        <input type="number" id="power" value="11" min="0.1" step="0.1" required>
+      </label>
+      <label>Ladeverluste (%)
+        <input type="number" id="loss" value="10" min="0" max="50" required>
+      </label>
+    </form>
+    <p class="result" id="result" aria-live="polite"></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
