@@ -68,6 +68,13 @@ footer { margin-top: 48px; color: var(--muted); }
 .site-nav + main { padding-top: 40px; }
 @media (prefers-reduced-motion: reduce) { .site-nav a { transition: none; } }
 
+/* Profil: Name mit GitHub-Icon */
+.name-row { display: flex; align-items: center; gap: 12px; margin: 24px 0 4px; }
+.name-row h1 { margin: 0; }
+.icon-link { display: inline-flex; color: var(--muted); opacity: .8; transition: color .15s, opacity .15s; }
+.icon-link:hover, .icon-link:focus-visible { color: var(--fg); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .icon-link { transition: none; } }
+
 /* Profil: Rollen und Skill-Tags, Farbe je Kategorie */
 .tagline.roles { color: var(--fg); font-weight: 500; }
 .tag-tech { --cat: var(--cat-tech); }
