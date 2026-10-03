@@ -3,6 +3,7 @@
   --fg: #1f2328;
   --muted: #59636e;
   --accent: #0969da;
+  --orange: #bc4c00;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -10,6 +11,7 @@
     --fg: #e6edf3;
     --muted: #9198a1;
     --accent: #4493f8;
+    --orange: #db6d28;
   }
 }
 * { box-sizing: border-box; }
@@ -31,18 +33,53 @@ h2 { font-size: 1.1rem; margin-top: 40px; }
 a { color: var(--accent); }
 footer { margin-top: 48px; color: var(--muted); }
 
-/* Navigation */
+/* Navigation: gemeinsame Capsule, Hover blendet eingesetzte Capsule ein */
 .site-nav {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 16px 16px 0;
+  --nav-col: 640px;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 16px auto 0 max(16px, (100% - var(--nav-col)) / 2 + 16px);
+  padding: 4px;
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 6%, var(--bg));
 }
-.site-nav a { color: var(--muted); text-decoration: none; }
-.site-nav a:hover { color: var(--accent); }
+.site-nav a {
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background-color .15s, box-shadow .15s, color .15s;
+}
+.site-nav a:hover, .site-nav a:focus-visible {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--muted) 18%, var(--bg));
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .28);
+}
 .site-nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
 .site-nav + main { padding-top: 40px; }
+@media (prefers-reduced-motion: reduce) { .site-nav a { transition: none; } }
+
+/* Profil: Rollen und Tags */
+.tagline.roles { color: var(--orange); font-weight: 500; }
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tags li {
+  padding: 1px 10px;
+  border: 1px solid color-mix(in srgb, var(--orange) 55%, transparent);
+  border-radius: 999px;
+  color: var(--fg);
+  font-size: .85rem;
+}
 
 /* Mini-Apps-Übersicht: Kacheln */
 .app-grid {
