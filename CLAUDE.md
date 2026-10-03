@@ -11,6 +11,8 @@ index.html          Profil-Startseite
 style.css           Gemeinsames Stylesheet (Farb-Tokens, Hell/Dunkel, Navigation)
 apps/index.html     Übersicht der Mini-Apps
 apps/<name>/        Eine Mini-App pro Ordner
+assets/car-stage.js 3D-Drahtgittermodell (Auto) auf der Startseite, Kamera folgt dem Scrollen
+vendor/three-<ver>/ three.js, lokal und fest versioniert (kein CDN)
 ```
 
 ## Mini-App hinzufügen
