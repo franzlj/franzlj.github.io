@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Live Activity Studio · Franz</title>
+  <meta name="description" content="Editor für Home-Assistant-Live-Activities auf dem iPhone, mit Vorschau und YAML-Export">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main class="studio">
+<div class="top">
+  <div>
+    <h1>Live Activity Studio</h1>
+    <p>Editor für Home-Assistant-Live-Activities auf dem iPhone. Texte direkt in der Vorschau anklicken und bearbeiten, Jinja-Templates mit Beispielwerten simulieren, YAML kopieren.</p>
+  </div>
+  <div class="presets" id="presets"><span>Beispiele</span></div>
+</div>
+
+<div class="grid">
+  <!-- Preview -->
+  <div class="col col-prev">
+    <section class="panel">
+      <header><h2>Vorschau</h2><small id="prevNote">Beispielwerte</small></header>
+      <div class="stage hints" id="stage">
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="sb"><span>Telekom</span><span>5G ▮</span></div>
+            <div class="lk-date" id="lkDate"></div>
+            <div class="lk-clock" id="lkClock"></div>
+            <div class="lk-slot"><div class="la" id="laCard">
+              <div class="la-row">
+                <button class="la-icon" id="laIcon" data-jump="notification_icon" title="Icon bearbeiten" type="button"></button>
+                <div class="la-main">
+                  <div class="la-title" data-f="title" data-ph="Titel" contenteditable="plaintext-only" spellcheck="false"></div>
+                  <div class="la-body" data-f="message" data-ph="Nachricht" contenteditable="plaintext-only" spellcheck="false" id="laMsg"></div>
+                  <div class="la-timer" id="laTimer" data-jump="when" title="Timer bearbeiten" hidden></div>
+                </div>
+                <div class="la-trail" id="laCrit" data-f="critical_text" data-ph="Kurztext" contenteditable="plaintext-only" spellcheck="false"></div>
+                <div class="la-trail" id="laPct" data-jump="progress" title="Fortschritt bearbeiten" hidden></div>
+              </div>
+              <div class="bar" id="laBar" data-jump="progress" title="Fortschrittsbalken bearbeiten" hidden><i></i></div>
+            </div></div>
+            <div class="lk-btns"><i></i><i></i></div>
+            <div class="lk-home"></div>
+          </div>
+        </div>
+        <div class="islands">
+          <div>
+            <div class="isl-label">Dynamic Island · kompakt und minimal</div>
+            <div class="isl-row">
+              <div class="di di-compact"><span id="diCIcon"></span><span class="tr" id="diCTr"></span></div>
+              <div class="di di-min" id="diMin"></div>
+            </div>
+          </div>
+          <div>
+            <div class="isl-label">Dynamic Island · erweitert (lange drücken)</div>
+            <div class="di di-exp">
+              <div class="la-row">
+                <span class="la-icon" id="diEIcon"></span>
+                <div class="la-main"><div class="la-title" id="diETitle"></div></div>
+                <div class="la-trail" id="diETr"></div>
+              </div>
+              <div class="la-body" id="diEBody"></div>
+              <div class="bar" id="diEBar" hidden><i></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="prev-tools">
+          <label class="sw"><input type="checkbox" id="optHints" checked> Bearbeitungshilfen</label>
+          <button class="chip" id="btnRestart" type="button">Timer neu starten</button>
+        </div>
+      </div>
+    </section>
+    <p class="note" style="margin:0 2px">Dynamic Island ist eine Annäherung an die Doku-Grafik. Farben für Hintergrund und Text gelten laut Doku nur auf dem Sperrbildschirm.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="col">
+    <section class="panel">
+      <header><h2>Inhalt &amp; Darstellung</h2><small>Felder mit <code>{ }</code> nehmen Templates</small></header>
+      <div class="pbody" id="form"></div>
+    </section>
+  </div>
+
+  <!-- Output -->
+  <div class="col col-out">
+    <section class="panel">
+      <header><h2>Templates</h2><small>Typ und Beispielwert für die Vorschau</small></header>
+      <div class="pbody" id="tpls"></div>
+    </section>
+    <section class="panel">
+      <header><h2>YAML</h2><small id="outInfo"></small></header>
+      <div class="pbody">
+        <div class="out-ctl">
+          <div class="seg" id="segMode" role="group" aria-label="Aktion">
+            <button type="button" data-v="start">Starten / Aktualisieren</button><button type="button" data-v="end">Beenden</button>
+          </div>
+          <div class="seg" id="segFmt" role="group" aria-label="Format">
+            <button type="button" data-v="automation">Automation</button><button type="button" data-v="devtools">Entwicklerwerkzeuge</button>
+          </div>
+        </div>
+        <div class="fld">
+          <label for="f_service">Benachrichtigungsdienst <code>action</code></label>
+          <div class="inp"><input id="f_service" class="tplish" spellcheck="false"></div>
+        </div>
+        <div class="yaml-wrap"><pre class="yaml" id="yaml"></pre><button class="copy" id="btnCopy" type="button">Kopieren</button></div>
+        <ul class="issues" id="issues"></ul>
+        <details class="imp">
+          <summary>Vorhandenes YAML importieren</summary>
+          <textarea id="impText" spellcheck="false" placeholder="Automation, Skript-Aktion oder data-Block einfügen"></textarea>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><button class="btn" id="btnImport" type="button">Übernehmen</button><span class="msg" id="impMsg"></span></div>
+        </details>
+      </div>
+    </section>
+  </div>
+</div>
+<p class="src">Format nach der offiziellen Doku: <a href="https://companion.home-assistant.io/docs/notifications/live-activities/" target="_blank" rel="noopener">Companion App · Live Activities and Live Updates</a> (iOS 17.2+, Home Assistant Core 2026.7+). Icons: Material Design Icons 7.4.47 (Apache 2.0). Daten bleiben im Browser (localStorage).</p>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
