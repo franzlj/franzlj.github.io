@@ -2,7 +2,8 @@
 
 Persönliche Website von Franz, ausgeliefert über GitHub Pages (https://franzlj.github.io).
 Reines HTML/CSS/JS, kein Build-Schritt, keine Abhängigkeiten. Jeder Push auf `main` wird
-automatisch veröffentlicht (Deploy from branch, Root `/`). Änderungen daher per Branch und PR.
+automatisch veröffentlicht (Deploy from branch, Root `/`). Änderungen daher per Branch und PR,
+nach Git Flow (siehe unten).
 
 ## Struktur
 
@@ -14,6 +15,21 @@ apps/<name>/        Eine Mini-App pro Ordner
 assets/tree-stage.js 3D-Drahtgittermodell (Baum) auf der Startseite, Kamera folgt dem Scrollen
 vendor/three-<ver>/ three.js, lokal und fest versioniert (kein CDN)
 ```
+
+## Git Flow
+
+Dauerhafte Branches: `main` (veröffentlicht, jeder Stand ist live) und `develop` (Integration).
+Direkte Pushes auf `main` und `develop` gibt es nicht, alles läuft über PRs.
+
+| Zweck | Branch | Startet von | PR-Ziel |
+| --- | --- | --- | --- |
+| Neue Funktion oder Verbesserung | `feature/<thema>` | `develop` | `develop` |
+| Dringender Fix auf der Live-Seite | `hotfix/<thema>` | `main` | `main`, danach nach `develop` |
+
+- Branch-Namen: Kleinbuchstaben und Bindestriche, z. B. `feature/live-activity-studio-timer`.
+  Keine anderen Präfixe wie `claude/...`.
+- Pro Thema ein Feature-Branch, kleine PRs. Mehrere Mini-Apps nicht in einem Branch mischen.
+- Alle PRs per Merge-Commit mergen (siehe Regeln), damit die Feature-Historie sichtbar bleibt.
 
 ## Mini-App hinzufügen
 
