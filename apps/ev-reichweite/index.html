@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EV Reichweitenrechner · Franz</title>
+  <meta name="description" content="Reichweite eines Elektroautos aus Batteriekapazität, SoH und Verbrauch, mit Prognose je Jahreszeit">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main class="ev">
+  <header>
+    <h1>EV Reichweitenrechner</h1>
+    <p class="sub">Reichweite aus nutzbarer Kapazität, Batteriegesundheit (SoH) und Verbrauch einer Jahreszeit, mit Prognose für die übrigen Jahreszeiten. Voreinstellung: BMW i4 M50 (80,7 kWh netto), SoH 97 %.</p>
+  </header>
+
+  <div class="grid">
+    <section class="panel" aria-label="Eingaben">
+      <div class="label">Eingaben</div>
+      <div class="field">
+        <label for="net">Netto-Batteriekapazität</label>
+        <div class="inrow"><input id="net" type="number" step="0.1" min="1" value="80.7"><span class="unit">kWh</span></div>
+      </div>
+      <div class="field">
+        <label for="soh">State of Health (SoH)</label>
+        <div class="inrow"><input id="soh" type="number" step="0.5" min="1" max="100" value="97"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="cons">Ø Verbrauch</label>
+        <div class="inrow"><input id="cons" type="number" step="0.1" min="1" value="19.5"><span class="unit">kWh/100 km</span></div>
+      </div>
+      <div class="field">
+        <label for="season">gemessen in</label>
+        <select id="season">
+          <option value="spring">Frühling</option>
+          <option value="summer" selected>Sommer</option>
+          <option value="autumn">Herbst</option>
+          <option value="winter">Winter</option>
+        </select>
+      </div>
+      <button id="reset" type="button">i4 M50 Werte wiederherstellen</button>
+    </section>
+
+    <section class="panel" aria-label="Ergebnis">
+      <div class="label">Ergebnis für <span id="seasonName">Sommer</span></div>
+      <div class="kpis">
+        <div class="kpi main"><div class="label">Reichweite 100 %</div><div class="v" id="r100">–</div><div class="s" id="r100mi"></div></div>
+        <div class="kpi main"><div class="label">Reichweite 80 %</div><div class="v" id="r80">–</div><div class="s" id="r80mi"></div></div>
+        <div class="kpi"><div class="label">Effizienz</div><div class="v" id="mikwh">–</div><div class="s" id="kmkwh"></div></div>
+        <div class="kpi"><div class="label">Nutzbare Energie</div><div class="v" id="usable">–</div><div class="s" id="lost"></div></div>
+      </div>
+      <div class="label">Rechenweg</div>
+      <div class="chain" id="chain"></div>
+    </section>
+  </div>
+
+  <section class="panel" aria-label="Prognose Jahreszeiten">
+    <div class="label">Prognose je Jahreszeit</div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Jahreszeit</th><th>Faktor ggü. Sommer</th><th>kWh/100 km</th><th>mi/kWh</th><th>Reichweite 100 %</th><th>Reichweite 80 %</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <p class="hint">Faktoren sind Annahmen (Mehrverbrauch durch Heizung, Batterietemperatur, Winterreifen) und direkt in der Tabelle änderbar. Echte Werte hängen stark von Fahrprofil, Autobahnanteil und Vorkonditionierung ab.</p>
+  </section>
+
+  <p class="foot">Quellen Batterie i4 M50 (G26, 2021–2024): 83,9 kWh brutto / 80,7 kWh netto laut <a href="https://evkx.net/da/models/bmw/i4/i4_m50/" target="_blank" rel="noopener">evkx.net</a> und <a href="https://www.fleetnews.co.uk/electric-fleet/electric-car-and-van-data/bmw/i4-1519" target="_blank" rel="noopener">Fleet News</a>. 1 mi = 1,609344 km.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
