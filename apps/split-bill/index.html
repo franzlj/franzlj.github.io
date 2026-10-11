@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Split Bill · Franz</title>
+  <meta name="description" content="Gemeinsame Ausgaben erfassen und mit möglichst wenigen Zahlungen ausgleichen">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main class="split">
+    <div class="head">
+      <h1>Split Bill</h1>
+      <p id="status" class="badge" role="status" aria-live="polite">Lädt …</p>
+    </div>
+  
+    <section class="block" aria-labelledby="h-people">
+      <h2 id="h-people" class="cap">Personen</h2>
+      <ul id="people" class="chips"></ul>
+      <form id="person-form" class="row-form" autocomplete="off">
+        <label class="sr" for="person-name">Name der Person</label>
+        <input id="person-name" type="text" maxlength="30" placeholder="Name hinzufügen">
+        <button class="btn" type="submit" id="person-add">Hinzufügen</button>
+      </form>
+      <p id="person-error" class="error" role="alert" hidden></p>
+    </section>
+  
+    <section class="block" aria-labelledby="h-tx">
+      <h2 id="h-tx" class="cap">Ausgaben</h2>
+      <form id="tx-form" class="panel" autocomplete="off">
+        <div class="fields">
+          <div class="field">
+            <label for="tx-person">Bezahlt von</label>
+            <select id="tx-person"></select>
+          </div>
+          <div class="field">
+            <label for="tx-amount">Betrag in €</label>
+            <input id="tx-amount" type="text" inputmode="decimal" placeholder="12,50">
+          </div>
+          <div class="field wide">
+            <label for="tx-desc">Beschreibung</label>
+            <input id="tx-desc" type="text" maxlength="60" placeholder="z. B. Abendessen">
+          </div>
+          <div class="field wide">
+            <label for="tx-for">Wer trägt die Ausgabe?</label>
+            <select id="tx-for"></select>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" id="tx-add">Ausgabe hinzufügen</button>
+        <p id="tx-error" class="error" role="alert" hidden></p>
+      </form>
+      <div id="groups" class="groups"></div>
+    </section>
+  
+    <section class="panel result-panel" aria-labelledby="h-result">
+      <h2 id="h-result" class="cap">Ausgleich bei gleicher Aufteilung</h2>
+      <div id="result"></div>
+    </section>
+  
+    <div class="tools">
+      <div class="foot">
+        <div class="menu" id="io-menu">
+          <button class="btn" type="button" id="io-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="io-list">
+            Export und Import
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu-list" id="io-list" role="menu" aria-label="Export und Import" hidden>
+            <div class="cap">Export</div>
+            <button class="menu-item" type="button" role="menuitem" id="md-save">Markdown speichern</button>
+            <button class="menu-item" type="button" role="menuitem" id="md-copy">Markdown kopieren</button>
+            <button class="menu-item" type="button" role="menuitem" id="json-save">JSON speichern</button>
+            <button class="menu-item" type="button" role="menuitem" id="json-copy">JSON kopieren</button>
+            <div class="menu-sep" role="separator"></div>
+            <div class="cap">Import</div>
+            <button class="menu-item" type="button" role="menuitem" id="json-file">JSON-Datei wählen</button>
+            <button class="menu-item" type="button" role="menuitem" id="json-paste">JSON einfügen</button>
+          </div>
+        </div>
+        <input id="json-input" type="file" accept=".json,application/json" hidden>
+        <button class="btn" type="button" id="example">Beispiel laden</button>
+        <button class="btn" type="button" id="reset">Alles löschen</button>
+      </div>
+      <div class="panel export" id="io-panel" hidden>
+        <p id="export-note" class="hint" role="status" aria-live="polite"></p>
+        <label class="sr" for="out-text">Export-Text</label>
+        <textarea id="out-text" readonly hidden rows="10"></textarea>
+        <div id="paste-box" class="export" hidden>
+          <div class="field">
+            <label for="json-in">JSON einfügen</label>
+            <textarea id="json-in" rows="8" placeholder='{"format": "split-bill", "version": 1, …}'></textarea>
+          </div>
+          <div class="export-row">
+            <button class="btn" type="button" id="json-do">Importieren</button>
+            <button class="btn" type="button" id="json-cancel">Abbrechen</button>
+          </div>
+        </div>
+        <div id="confirm-box" class="export" hidden>
+          <p id="confirm-text" class="hint"></p>
+          <div class="export-row">
+            <button class="btn btn-danger" type="button" id="confirm-yes">Daten ersetzen</button>
+            <button class="btn" type="button" id="confirm-no">Abbrechen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
