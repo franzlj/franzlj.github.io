@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tageslicht-Atlas · Franz</title>
+  <meta name="description" content="Sonnenaufgang, Sonnenuntergang und Tageslänge über zwölf Monate, in Ortszeit inklusive Zeitumstellung">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main class="daylight">
+    <header>
+      <div>
+        <h1>Tageslicht-Atlas</h1>
+        <p class="sub" id="subtitle">Sonnenaufgang bis -untergang, Ortszeit inkl. Zeitumstellung</p>
+      </div>
+      <div class="controls">
+        <label for="preset">Ort
+          <select id="preset"></select>
+        </label>
+        <label for="lat">Breite °
+          <input id="lat" type="number" step="0.01" min="-89.9" max="89.9">
+        </label>
+        <label for="lon">Länge °
+          <input id="lon" type="number" step="0.01" min="-180" max="180">
+        </label>
+        <label for="tz">Zeitzone
+          <input id="tz" type="text" spellcheck="false">
+        </label>
+      </div>
+    </header>
+
+    <section class="stats" id="stats" aria-label="Kennzahlen"></section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div class="readout" id="readout" aria-live="polite"></div>
+        <div class="zoom" role="group" aria-label="Zoom">
+          <button id="z-all" aria-pressed="true">12 Monate</button>
+          <button id="z-3m">3 Monate</button>
+          <button id="z-1m">1 Monat</button>
+          <button id="z-in" aria-label="Hineinzoomen">+</button>
+          <button id="z-out" aria-label="Herauszoomen">−</button>
+        </div>
+      </div>
+      <div class="canvas-box" id="box">
+        <canvas id="cv" tabindex="0" aria-label="Diagramm der Tageslichtzeiten; Pfeiltasten wählen einen Tag"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--day)"></i>Tageslicht</span>
+        <span><i class="sw" style="background:var(--twilight)"></i>Bürgerliche Dämmerung</span>
+        <span><i class="sw" style="background:var(--night)"></i>Nacht</span>
+        <span><i class="ln" style="border-color:var(--noon)"></i>Sonnenhöchststand</span>
+        <span><i class="ln" style="border-color:var(--dst)"></i>Zeitumstellung</span>
+        <span><i class="ln" style="border-color:var(--today);border-top-style:solid"></i>Heute</span>
+      </div>
+      <p class="note">Zoomen: Mausrad, Pinch oder Buttons. Verschieben: ziehen. Tag wählen: zeigen/tippen oder Pfeiltasten. Berechnung nach dem NOAA-Näherungsverfahren (Horizont −0,833°, Dämmerung −6°); Abweichung typ. unter 1–2 Minuten.</p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

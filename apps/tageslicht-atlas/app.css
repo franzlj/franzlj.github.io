@@ -1,0 +1,48 @@
+/* Tageslicht-Atlas: Kopfzeile mit Ort + Kennzahlen, darunter ein breites Zeitband-Diagramm (Uhrzeit × Datum) mit Tageslängen-Streifen.
+   Basisfarben (--bg, --fg, --muted, --accent) kommen aus ../../style.css, Diagrammfarben sind eigene Tokens. */
+:root{
+  --surface:color-mix(in srgb, var(--muted) 5%, var(--bg));
+  --line:color-mix(in srgb, var(--muted) 30%, transparent);
+  --f-num:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --night:#27304f; --twilight:#8a7fb6; --day:#ffd98a; --day-edge:#f0b44a;
+  --noon:#b26a12; --today:#d2453b; --dst:var(--accent); --grid:rgba(255,255,255,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --night:#0b0e1c; --twilight:#4b4580; --day:#e8bf62; --day-edge:#f3cf7e;
+    --noon:#7a4a0c; --today:#ff6b5e; --grid:rgba(255,255,255,.12);
+  }
+}
+
+/* Breiteres Layout als die übrigen Seiten */
+.site-nav{--nav-col:1180px}
+main.daylight{max-width:1180px;padding:24px 16px 40px;display:grid;gap:16px;font-size:15px;line-height:1.45}
+.daylight header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+.daylight h1{font-size:clamp(1.6rem,3.4vw,2.3rem);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.daylight .sub{color:var(--muted);margin:2px 0 0}
+.daylight .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+.daylight label{display:grid;gap:3px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.daylight select,.daylight input,.daylight button{font:inherit;font-size:.9rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.daylight input[type=number]{width:6.5em;font-family:var(--f-num)}
+.daylight #tz{width:11em}
+.daylight button{cursor:pointer}
+.daylight button:hover{border-color:var(--accent);color:var(--accent)}
+.daylight button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.daylight :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.daylight .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.daylight .stat{background:var(--surface);padding:10px 14px;min-width:0}
+.daylight .stat .k{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.daylight .stat .v{font-family:var(--f-num);font-size:1.05rem;font-variant-numeric:tabular-nums;margin-top:2px}
+.daylight .stat .d{font-size:.8rem;color:var(--muted)}
+.daylight .panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:10px;min-width:0}
+.daylight .toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between}
+.daylight .zoom{display:flex;flex-wrap:wrap;gap:6px}
+.daylight .readout{font-family:var(--f-num);font-size:.85rem;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:4px 16px}
+.daylight .readout b{font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;font-weight:600}
+.daylight .canvas-box{position:relative;width:100%;touch-action:none;user-select:none}
+.daylight canvas{display:block;width:100%;cursor:crosshair}
+.daylight canvas.dragging{cursor:grabbing}
+.daylight .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8rem;color:var(--muted)}
+.daylight .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:6px}
+.daylight .ln{display:inline-block;width:16px;height:0;border-top:2px dashed;vertical-align:3px;margin-right:6px}
+.daylight .note{font-size:.8rem;color:var(--muted);max-width:75ch;margin:0}
