@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>E-Auto Kostenvergleich · Franz</title>
+  <meta name="description" content="Ladekosten eines Elektroautos pro 100 km, Monat und Jahr im Vergleich zu den Spritkosten eines Verbrenners">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../../">Profil</a>
+    <a href="../" aria-current="page">Mini-Apps</a>
+  </nav>
+  <main class="cost">
+  <header>
+    <h1>E-Auto Kostenvergleich</h1>
+    <p>Was kostet das Laden eines Elektroautos pro 100 km, Monat und Jahr – und was hätte ein vergleichbarer Verbrenner an der Tankstelle gekostet? Vorbelegt mit Durchschnittswerten (Stand Okt. 2026); alle Felder anpassbar.</p>
+  </header>
+
+  <div class="grid">
+    <div class="col">
+      <section class="panel" aria-labelledby="h-common">
+        <h2 id="h-common">Fahrprofil</h2>
+        <div class="fields">
+          <label class="full">Fahrleistung pro Jahr
+            <div class="inp"><input id="km" type="number" min="0" step="500" inputmode="numeric"><span>km/Jahr</span></div>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-ev">
+        <h2 id="h-ev"><span class="dot ev"></span>Elektroauto</h2>
+        <div class="fields">
+          <label class="full">Vorlage
+            <div class="inp"><select id="preset">
+              <optgroup label="Fahrzeugklasse (Richtwert)">
+              <option value="15">Kleinwagen – 15 kWh</option>
+              <option value="16.5">Kompaktklasse – 16,5 kWh</option>
+              <option value="18.5">Mittelklasse – 18,5 kWh</option>
+              <option value="21">SUV / Oberklasse – 21 kWh</option>
+              </optgroup>
+              <optgroup label="Beispielmodelle">
+              <option value="19.6">BMW i4 eDrive40 – Praxis Ø 19,6 kWh</option>
+              <option value="22">BMW i4 M50 – WLTP max. 22,0 kWh</option>
+              </optgroup>
+              <option value="custom">Eigener Wert</option>
+            </select></div>
+          </label>
+          <label>Verbrauch (Bordcomputer)
+            <div class="inp"><input id="evc" type="number" min="5" max="50" step="0.1" inputmode="decimal"><span>kWh/100 km</span></div>
+          </label>
+          <label>Ladeverluste
+            <div class="inp"><input id="loss" type="number" min="0" max="40" step="1" inputmode="numeric"><span>%</span></div>
+            <span class="hint">Bordcomputer zeigt Verbrauch ohne Verluste</span>
+          </label>
+          <label>Strompreis Zuhause
+            <div class="inp"><input id="pHome" type="number" min="0" step="0.01" inputmode="decimal"><span>€/kWh</span></div>
+          </label>
+          <label>Öffentlich AC
+            <div class="inp"><input id="pAC" type="number" min="0" step="0.01" inputmode="decimal"><span>€/kWh</span></div>
+          </label>
+          <label>Öffentlich DC (HPC)
+            <div class="inp"><input id="pDC" type="number" min="0" step="0.01" inputmode="decimal"><span>€/kWh</span></div>
+          </label>
+          <label>Grund-/Abogebühr
+            <div class="inp"><input id="fee" type="number" min="0" step="0.5" inputmode="decimal"><span>€/Monat</span></div>
+          </label>
+          <div class="mix full">
+            <label for="sHome">Anteil Zuhause: <strong id="sHomeV" class="c-ev"></strong></label>
+            <input id="sHome" type="range" min="0" max="100" step="5">
+            <label for="sAC">Anteil öffentlich AC: <strong id="sACV" class="c-ev"></strong> · DC: <strong id="sDCV" class="c-ev"></strong></label>
+            <input id="sAC" type="range" min="0" max="100" step="5">
+            <div class="mixbar" aria-hidden="true"><i id="mbH"></i><i id="mbA"></i><i id="mbD"></i></div>
+            <div class="mixlegend"><span>■ Zuhause</span><span>■ AC</span><span>■ DC</span><span id="mixPrice"></span></div>
+            <span id="mixWarn" class="warn" hidden>Zuhause + AC übersteigt 100 % – AC wurde gekürzt.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-ice">
+        <h2 id="h-ice"><span class="dot ice"></span>Vergleichs-Verbrenner</h2>
+        <div class="fields">
+          <label class="full">Kraftstoff
+            <div class="inp"><select id="fuel">
+              <option value="e10">Super E10 (Ø 2,15 €/l)</option>
+              <option value="diesel">Diesel (Ø 2,25 €/l)</option>
+              <option value="custom">Eigener Preis</option>
+            </select></div>
+          </label>
+          <label>Preis
+            <div class="inp"><input id="pf" type="number" min="0" step="0.01" inputmode="decimal"><span>€/l</span></div>
+          </label>
+          <label class="full">Fahrzeugklasse
+            <div class="inp"><select id="icepreset">
+              <option value="5.5">Kleinwagen – 5,5 l</option>
+              <option value="6.5">Kompaktklasse – 6,5 l</option>
+              <option value="7">Mittelklasse – 7,0 l</option>
+              <option value="8.5">SUV / Oberklasse – 8,5 l</option>
+              <option value="custom">Eigener Wert</option>
+            </select></div>
+          </label>
+          <label>Verbrauch
+            <div class="inp"><input id="icec" type="number" min="1" max="30" step="0.1" inputmode="decimal"><span>l/100 km</span></div>
+            <span class="hint">Praxiswert, gleiche Klasse wie das E-Auto wählen</span>
+          </label>
+        </div>
+      </section>
+      <div class="actions"><button class="reset" id="reset" type="button">Auf Standardwerte zurücksetzen</button><span id="saveState" class="hint"></span></div>
+    </div>
+
+    <section class="panel result" aria-labelledby="h-res" aria-live="polite">
+      <h2 id="h-res">Ergebnis</h2>
+      <p class="verdict" id="verdict"></p>
+      <p class="sub" id="verdictSub"></p>
+
+      <div class="bars" id="bars">
+        <div class="bar"><span>E-Auto</span><div class="track"><div class="fill" id="barEv"></div></div><span class="val c-ev" id="barEvV"></span></div>
+        <div class="bar"><span>Verbrenner</span><div class="track"><div class="fill" id="barIce"></div></div><span class="val c-ice" id="barIceV"></span></div>
+      </div>
+
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>Kosten</th><th class="c-ev">E-Auto</th><th class="c-ice">Verbrenner</th><th>Differenz</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><small>Ø Strompreis (Mix)</small><strong id="kMix"></strong></div>
+        <div class="kpi"><small>Break-even Strompreis</small><strong id="kBe"></strong></div>
+        <div class="kpi"><small>Energie aus dem Netz</small><strong id="kGrid"></strong></div>
+        <div class="kpi"><small>Kosten entsprechen</small><strong id="kEq"></strong></div>
+      </div>
+
+      <div>
+        <h2 class="steps-head">Rechenweg</h2>
+        <div class="steps" id="steps"></div>
+      </div>
+
+      <details>
+        <summary>Quellen der Standardwerte</summary>
+        <ul>
+          <li>Spritpreise: ADAC-Wochenauswertung Okt. 2026 – E10 2,151 €/l, Diesel 2,247 €/l (<a href="https://presse.adac.de/meldungen/adac-ev/verkehr/leichter-preisanstieg-bei-diesel-und-benzin.html" target="_blank" rel="noopener">presse.adac.de</a>)</li>
+          <li>Haushaltsstrom: BDEW-Strompreisanalyse 08/2026 – Ø 37,0 ct/kWh (<a href="https://www.bdew.de/media/documents/BDEW_Strompreisanalyse_082026.pdf" target="_blank" rel="noopener">bdew.de</a>)</li>
+          <li>i4 eDrive40 Praxisverbrauch Ø 19,6 kWh/100 km (Nutzerdaten, <a href="https://www.autokostencheck.de/BMW/BMW-i-Modelle/i4/i4-e-drive40-g4c_49787/verbrauch/" target="_blank" rel="noopener">autokostencheck.de</a>); WLTP 16,1–19,1 kWh (<a href="https://insideevs.de/reviews/590519/bmw-i4edrive40-verbrauchstest-franzosische-autobahn/" target="_blank" rel="noopener">insideevs.de</a>); M50 bis 22,0 kWh (BMW Group Presse)</li>
+          <li>Nicht recherchiert, Schätzwerte: Klassen-Richtwerte für E-Auto und Verbrenner, öffentliche AC/DC-Preise, Ladeverluste 10 %. Bitte mit eigenen Werten ersetzen.</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
