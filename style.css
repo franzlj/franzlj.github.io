@@ -136,10 +136,18 @@ body:has(.tree-stage) { overflow-x: clip; }
 }
 
 /* Mini-Apps-Übersicht: Kacheln */
+.app-section h2 {
+  margin: 40px 0 12px;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
 .app-grid {
   list-style: none;
   padding: 0;
-  margin: 24px 0 0;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 16px;
@@ -158,6 +166,25 @@ body:has(.tree-stage) { overflow-x: clip; }
   transition: border-color .15s, transform .15s;
 }
 .app-tile:hover, .app-tile:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+.app-tile-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
+  color: var(--accent);
+}
+.app-tile-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .app-tile-title { font-weight: 600; color: var(--accent); }
 .app-tile-desc { color: var(--muted); font-size: .95rem; line-height: 1.45; }
 @media (prefers-reduced-motion: reduce) { .app-tile { transition: none; } .app-tile:hover { transform: none; } }

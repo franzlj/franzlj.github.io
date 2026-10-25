@@ -15,38 +15,66 @@
   <main>
     <h1>Mini-Apps</h1>
     <p class="tagline">Kleine Web-Apps, die direkt im Browser laufen.</p>
-    <ul class="app-grid">
-      <li>
-        <a class="app-tile" href="live-activities-studio/">
-          <span class="app-tile-title">Live Activity Studio</span>
-          <span class="app-tile-desc">Baut Home-Assistant-Live-Activities fürs iPhone mit Vorschau, Template-Simulation und YAML-Export.</span>
-        </a>
-      </li>
-      <li>
-        <a class="app-tile" href="ev-reichweite/">
-          <span class="app-tile-title">EV Reichweitenrechner</span>
-          <span class="app-tile-desc">Berechnet die Reichweite eines Elektroautos aus Batteriekapazität, SoH und Verbrauch, mit Prognose je Jahreszeit.</span>
-        </a>
-      </li>
-      <li>
-        <a class="app-tile" href="split-bill/">
-          <span class="app-tile-title">Split Bill</span>
-          <span class="app-tile-desc">Teilt gemeinsame Ausgaben auf und zeigt, wer wem wie viel zahlt, mit Export als Markdown oder JSON.</span>
-        </a>
-      </li>
-      <li>
-        <a class="app-tile" href="tageslicht-atlas/">
-          <span class="app-tile-title">Tageslicht-Atlas</span>
-          <span class="app-tile-desc">Zeigt Sonnenaufgang, Sonnenuntergang und Tageslänge über zwölf Monate für einen Ort, in Ortszeit mit Zeitumstellung.</span>
-        </a>
-      </li>
-      <li>
-        <a class="app-tile" href="e-auto-kostenvergleich/">
-          <span class="app-tile-title">E-Auto Kostenvergleich</span>
-          <span class="app-tile-desc">Vergleicht die Ladekosten eines Elektroautos pro 100 km, Monat und Jahr mit den Spritkosten eines Verbrenners.</span>
-        </a>
-      </li>
-    </ul>
+    <section class="app-section" aria-labelledby="cat-smarthome">
+      <h2 id="cat-smarthome">Smart Home</h2>
+      <ul class="app-grid">
+        <li>
+          <a class="app-tile" href="live-activities-studio/">
+            <span class="app-tile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><rect x="8.5" y="5.5" width="7" height="4" rx="1.5"/><path d="M11 18.5h2"/></svg>
+            </span>
+            <span class="app-tile-title">Live Activity Studio</span>
+            <span class="app-tile-desc">Baut Home-Assistant-Live-Activities fürs iPhone mit Vorschau, Template-Simulation und YAML-Export.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="app-section" aria-labelledby="cat-emobil">
+      <h2 id="cat-emobil">Elektromobilität</h2>
+      <ul class="app-grid">
+        <li>
+          <a class="app-tile" href="ev-reichweite/">
+            <span class="app-tile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4.5 18a9 9 0 1 1 15 0"/><path d="m12 13 3.5-4"/><circle cx="12" cy="13" r="1.2"/><path d="M7 18h10"/></svg>
+            </span>
+            <span class="app-tile-title">EV Reichweitenrechner</span>
+            <span class="app-tile-desc">Berechnet die Reichweite eines Elektroautos aus Batteriekapazität, SoH und Verbrauch, mit Prognose je Jahreszeit.</span>
+          </a>
+        </li>
+        <li>
+          <a class="app-tile" href="e-auto-kostenvergleich/">
+            <span class="app-tile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M15.5 8.6a4.2 4.2 0 1 0 0 6.8"/><path d="M7.5 10.8h5.5M7.5 13.2h5.5"/></svg>
+            </span>
+            <span class="app-tile-title">E-Auto Kostenvergleich</span>
+            <span class="app-tile-desc">Vergleicht die Ladekosten eines Elektroautos pro 100 km, Monat und Jahr mit den Spritkosten eines Verbrenners.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="app-section" aria-labelledby="cat-alltag">
+      <h2 id="cat-alltag">Alltag</h2>
+      <ul class="app-grid">
+        <li>
+          <a class="app-tile" href="split-bill/">
+            <span class="app-tile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 2.5h14V21l-2.33-1.5L14.33 21 12 19.5 9.67 21l-2.34-1.5L5 21z"/><path d="M8.5 7.5h7M8.5 11h7M8.5 14.5h4"/></svg>
+            </span>
+            <span class="app-tile-title">Split Bill</span>
+            <span class="app-tile-desc">Teilt gemeinsame Ausgaben auf und zeigt, wer wem wie viel zahlt, mit Export als Markdown oder JSON.</span>
+          </a>
+        </li>
+        <li>
+          <a class="app-tile" href="tageslicht-atlas/">
+            <span class="app-tile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 17a5 5 0 0 1 10 0"/><path d="M2 21h20"/><path d="M12 3v4M4.2 9.2l2 2M19.8 9.2l-2 2M2 17h2.5M19.5 17H22"/></svg>
+            </span>
+            <span class="app-tile-title">Tageslicht-Atlas</span>
+            <span class="app-tile-desc">Zeigt Sonnenaufgang, Sonnenuntergang und Tageslänge über zwölf Monate für einen Ort, in Ortszeit mit Zeitumstellung.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
 </body>
 </html>
