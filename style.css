@@ -7,6 +7,10 @@
   --cat-tech: #1a7f37;
   --cat-method: #8250df;
   --cat-discipline: #bf3989;
+  /* Mini-App-Kategorien */
+  --app-smarthome: #bc4c00;
+  --app-emobil: #1a7f37;
+  --app-alltag: #8250df;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -17,6 +21,9 @@
     --cat-tech: #3fb950;
     --cat-method: #ab7df8;
     --cat-discipline: #db61a2;
+    --app-smarthome: #f0883e;
+    --app-emobil: #3fb950;
+    --app-alltag: #ab7df8;
   }
 }
 * { box-sizing: border-box; }
@@ -136,10 +143,49 @@ body:has(.tree-stage) { overflow-x: clip; }
 }
 
 /* Mini-Apps-Übersicht: Kacheln */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.app-search { margin-top: 24px; }
+.app-search input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--muted) 6%, var(--bg));
+  color: var(--fg);
+  font: inherit;
+}
+.app-search input::placeholder { color: var(--muted); }
+.app-search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.app-empty { margin-top: 32px; color: var(--muted); }
+.app-section h2 {
+  margin: 40px 0 12px;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.app-section h2::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cat);
+}
 .app-grid {
   list-style: none;
   padding: 0;
-  margin: 24px 0 0;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 16px;
@@ -158,6 +204,25 @@ body:has(.tree-stage) { overflow-x: clip; }
   transition: border-color .15s, transform .15s;
 }
 .app-tile:hover, .app-tile:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+.app-tile-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--cat, var(--accent)) 14%, var(--bg));
+  color: var(--cat, var(--accent));
+}
+.app-tile-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .app-tile-title { font-weight: 600; color: var(--accent); }
 .app-tile-desc { color: var(--muted); font-size: .95rem; line-height: 1.45; }
 @media (prefers-reduced-motion: reduce) { .app-tile { transition: none; } .app-tile:hover { transform: none; } }
