@@ -7,6 +7,10 @@
   --cat-tech: #1a7f37;
   --cat-method: #8250df;
   --cat-discipline: #bf3989;
+  /* Mini-App-Kategorien */
+  --app-smarthome: #bc4c00;
+  --app-emobil: #1a7f37;
+  --app-alltag: #8250df;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -17,6 +21,9 @@
     --cat-tech: #3fb950;
     --cat-method: #ab7df8;
     --cat-discipline: #db61a2;
+    --app-smarthome: #f0883e;
+    --app-emobil: #3fb950;
+    --app-alltag: #ab7df8;
   }
 }
 * { box-sizing: border-box; }
@@ -136,6 +143,27 @@ body:has(.tree-stage) { overflow-x: clip; }
 }
 
 /* Mini-Apps-Übersicht: Kacheln */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.app-search { margin-top: 24px; }
+.app-search input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--muted) 6%, var(--bg));
+  color: var(--fg);
+  font: inherit;
+}
+.app-search input::placeholder { color: var(--muted); }
+.app-search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.app-empty { margin-top: 32px; color: var(--muted); }
 .app-section h2 {
   margin: 40px 0 12px;
   color: var(--muted);
@@ -143,6 +171,16 @@ body:has(.tree-stage) { overflow-x: clip; }
   font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.app-section h2::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cat);
 }
 .app-grid {
   list-style: none;
@@ -173,8 +211,8 @@ body:has(.tree-stage) { overflow-x: clip; }
   height: 40px;
   margin-bottom: 4px;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
-  color: var(--accent);
+  background: color-mix(in srgb, var(--cat, var(--accent)) 14%, var(--bg));
+  color: var(--cat, var(--accent));
 }
 .app-tile-icon svg {
   width: 22px;

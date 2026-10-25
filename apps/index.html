@@ -15,7 +15,11 @@
   <main>
     <h1>Mini-Apps</h1>
     <p class="tagline">Kleine Web-Apps, die direkt im Browser laufen.</p>
-    <section class="app-section" aria-labelledby="cat-smarthome">
+    <div class="app-search">
+      <label for="app-filter" class="visually-hidden">Mini-Apps filtern</label>
+      <input id="app-filter" type="search" placeholder="Apps durchsuchen …" autocomplete="off" spellcheck="false">
+    </div>
+    <section class="app-section" aria-labelledby="cat-smarthome" style="--cat: var(--app-smarthome)">
       <h2 id="cat-smarthome">Smart Home</h2>
       <ul class="app-grid">
         <li>
@@ -29,7 +33,7 @@
         </li>
       </ul>
     </section>
-    <section class="app-section" aria-labelledby="cat-emobil">
+    <section class="app-section" aria-labelledby="cat-emobil" style="--cat: var(--app-emobil)">
       <h2 id="cat-emobil">Elektromobilität</h2>
       <ul class="app-grid">
         <li>
@@ -52,7 +56,7 @@
         </li>
       </ul>
     </section>
-    <section class="app-section" aria-labelledby="cat-alltag">
+    <section class="app-section" aria-labelledby="cat-alltag" style="--cat: var(--app-alltag)">
       <h2 id="cat-alltag">Alltag</h2>
       <ul class="app-grid">
         <li>
@@ -75,6 +79,8 @@
         </li>
       </ul>
     </section>
+    <p class="app-empty" id="app-empty" hidden>Keine passende App gefunden.</p>
   </main>
+  <script src="apps.js"></script>
 </body>
 </html>
