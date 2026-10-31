@@ -196,7 +196,7 @@ function init() {
   function applyTheme() {
     const css = getComputedStyle(document.documentElement);
     const c = name => new THREE.Color(css.getPropertyValue(name).trim() || '#888');
-    const bg = c('--bg'), fg = c('--fg'), muted = c('--muted'), green = c('--cat-tech');
+    const bg = c('--bg'), fg = c('--fg'), muted = c('--muted'), green = c('--leaf');
     mats.fill.color.copy(bg);
     mats.wood.color.copy(fg);
     mats.leaves.color.copy(green); mats.leaves.opacity = 0.75;

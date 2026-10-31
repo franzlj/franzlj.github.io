@@ -9,11 +9,13 @@ und PR (siehe unten).
 
 ```
 index.html          Profil-Startseite
-style.css           Gemeinsames Stylesheet (Farb-Tokens, Hell/Dunkel, Navigation)
+style.css           Gemeinsames Stylesheet: Design-System-Tokens (Farbe, Schrift, Abstände), Hell/Dunkel, Kopf- und Fußzeile
+notizen/            Notizen (Blog): Übersicht, ein Ordner pro Artikel mit index.html
 apps/index.html     Übersicht der Mini-Apps
 apps/<name>/        Eine Mini-App pro Ordner
 assets/tree-stage.js 3D-Drahtgittermodell (Baum) auf der Startseite, Kamera folgt dem Scrollen
 vendor/three-<ver>/ three.js, lokal und fest versioniert (kein CDN)
+vendor/fonts/       Bricolage Grotesque (Überschriften, OFL), lokal statt Google Fonts
 ```
 
 ## Branches
@@ -33,8 +35,8 @@ Direkte Pushes auf `main` gibt es nicht, alles läuft über PRs.
    eigenes CSS/JS daneben (z. B. `app.css`, `app.js`). Vorlage: `apps/live-activities-studio/`.
 2. Im `<head>` `../../style.css` einbinden, damit Farben, Schrift und Dark Mode übereinstimmen.
    App-spezifisches CSS nutzt die Tokens `--bg`, `--fg`, `--muted`, `--accent`.
-3. Die Navigation aus den anderen Seiten übernehmen, mit relativen Links
-   (`../../` = Profil, `../` = Mini-Apps, dort `aria-current="page"`).
+3. Kopfzeile `header.site-header` (Marke + `nav.site-nav`) aus den anderen Seiten übernehmen, mit
+   relativen Links (`../../` = Profil, `../` = Mini-Apps, dort `aria-current="page"`).
 4. In `apps/index.html` eine Kachel in `.app-grid` ergänzen (`<li>` mit `a.app-tile`, darin
    `.app-tile-title` und ein Satz in `.app-tile-desc`).
 
@@ -52,4 +54,11 @@ Direkte Pushes auf `main` gibt es nicht, alles läuft über PRs.
 ## Neue Hauptsektion
 
 Weitere Sektion analog zu `apps/` als eigener Ordner mit `index.html` anlegen und den Link in
-die `.site-nav` aller Seiten aufnehmen.
+die `.site-nav` und die Fußzeile aller Seiten aufnehmen.
+
+## Design System
+
+Tokens und Komponenten stehen in `style.css` (Abschnitt `:root`). Neue Farben, Abstände oder
+Schriftgrößen dort als Token anlegen, nicht direkt in Komponenten. Schriften: `--font-display`
+für Überschriften, `--font-body` für Text, `--font-mono` für Metadaten und Eyebrows.
+Bei neuen CSS-Klassen die Versions-Query `style.css?v=N` in allen Seiten erhöhen.

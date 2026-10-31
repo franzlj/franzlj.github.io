@@ -5,16 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mini-Apps · Franz</title>
   <meta name="description" content="Kleine Web-Apps von Franz, reines HTML/CSS/JS">
-  <link rel="stylesheet" href="../style.css?v=2">
+  <link rel="stylesheet" href="../style.css?v=4">
 </head>
 <body>
-  <nav class="site-nav">
-    <a href="../">Profil</a>
-    <a href="./" aria-current="page">Mini-Apps</a>
-  </nav>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../notizen/">Notizen</a>
+        <a href="../apps/" aria-current="page">Mini-Apps</a>
+        <a href="../#ueber">Über mich</a>
+      </nav>
+    </div>
+  </header>
   <main>
-    <h1>Mini-Apps</h1>
-    <p class="tagline">Kleine Web-Apps, die direkt im Browser laufen.</p>
+    <p class="eyebrow">Mini-Apps</p>
+    <h1>Kleine Werkzeuge im Browser</h1>
+    <p class="tagline">Kleine Web-Apps, die direkt im Browser laufen. Alle Daten bleiben auf deinem Gerät.</p>
     <div class="app-search">
       <label for="app-filter" class="visually-hidden">Mini-Apps filtern</label>
       <input id="app-filter" type="search" placeholder="Apps durchsuchen …" autocomplete="off" spellcheck="false">
@@ -81,6 +88,29 @@
     </section>
     <p class="app-empty" id="app-empty" hidden>Keine passende App gefunden.</p>
   </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+        <p>Mobile Apps, Software-Architektur, Homelab und Elektromobilität.</p>
+      </div>
+      <nav aria-labelledby="f-seiten">
+        <h2 id="f-seiten">Seiten</h2>
+        <ul>
+          <li><a href="../notizen/">Notizen</a></li>
+          <li><a href="../apps/">Mini-Apps</a></li>
+          <li><a href="../#ueber">Über mich</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-extern">
+        <h2 id="f-extern">Woanders</h2>
+        <ul>
+          <li><a href="https://github.com/franzlj">GitHub</a></li>
+          <li><a href="https://github.com/franzlj/franzlj.github.io">Quelltext dieser Seite</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
   <script src="apps.js?v=2"></script>
 </body>
 </html>

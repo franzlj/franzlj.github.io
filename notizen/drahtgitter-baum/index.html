@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ein Baum aus Drahtgitter · Franz</title>
+  <meta name="description" content="Wie der 3D-Baum auf der Startseite entsteht: rekursive Äste, ein fester Zufalls-Seed und eine Kamera, die dem Scrollen folgt.">
+  <link rel="stylesheet" href="../../style.css?v=4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../../notizen/" aria-current="page">Notizen</a>
+        <a href="../../apps/">Mini-Apps</a>
+        <a href="../../#ueber">Über mich</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article">
+      <header class="article-head">
+        <a class="back" href="../">← Alle Notizen</a>
+        <h1>Ein Baum aus Drahtgitter</h1>
+        <p class="lead">Wie der 3D-Baum auf der Startseite entsteht: rekursive Äste, ein fester Zufalls-Seed und eine Kamera, die dem Scrollen folgt.</p>
+        <div class="meta"><span class="status">Entwurf</span><span>6 min Lesezeit</span><span class="chip">Web</span><span class="chip">3D</span></div>
+      </header>
+      <div class="prose">
+      <div class="note"><strong>Skizze</strong> · Dieser Artikel ist ein Entwurf, um Layout und Ton der Notizen zu zeigen. Der Code steht in <code>assets/tree-stage.js</code>.</div>
+      <p>Der Baum auf der Startseite ist kein 3D-Modell aus einer Datei. Er wird beim Laden mit three.js aus wenigen Regeln erzeugt.</p>
+      <h2>Äste rekursiv</h2>
+      <p>Jeder Ast ist eine leicht gebogene, sich verjüngende Röhre entlang einer Kurve. Am Ende eines Asts entstehen zwei bis drei Kinder, die sich um die Achse verteilen und etwas nach oben streben. Ein Mittelast setzt den Stamm fort. Fünf kurze Röhren am Fuß bilden die Wurzelansätze.</p>
+      <h2>Fester Zufall</h2>
+      <p>Die Zufallszahlen kommen aus einem kleinen Generator (mulberry32) mit festem Seed. Darum sieht der Baum bei jedem Besuch gleich aus.</p>
+      <pre><code>const rand = rng(1780720);</code></pre>
+      <h2>Laub als Gitter</h2>
+      <p>Jede Laubwolke ist ein unregelmäßiges Ikosaeder. Gleiche Ecken werden gleich verschoben, damit die Fläche geschlossen bleibt, und die Wolke ist etwas abgeflacht. Die Dreiecke ergeben das Drahtgitter.</p>
+      <h2>Kamera und Scrollen</h2>
+      <p>Der Scrollfortschritt steuert die Kamera: Sie startet schräg von oben, kreist beim Scrollen um den Baum und senkt sich fast auf Augenhöhe. Farben liest das Skript aus den CSS-Tokens, deshalb passt der Baum zu Hell und Dunkel. Wer reduzierte Bewegung eingestellt hat, sieht eine feste Ansicht.</p>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Weitere Notizen"><a href="../website-ohne-build/"><span class="meta">← Vorherige</span><span class="post-title">Eine Website ohne Build-Schritt</span></a></nav>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+        <p>Mobile Apps, Software-Architektur, Homelab und Elektromobilität.</p>
+      </div>
+      <nav aria-labelledby="f-seiten">
+        <h2 id="f-seiten">Seiten</h2>
+        <ul>
+          <li><a href="../../notizen/">Notizen</a></li>
+          <li><a href="../../apps/">Mini-Apps</a></li>
+          <li><a href="../../#ueber">Über mich</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-extern">
+        <h2 id="f-extern">Woanders</h2>
+        <ul>
+          <li><a href="https://github.com/franzlj">GitHub</a></li>
+          <li><a href="https://github.com/franzlj/franzlj.github.io">Quelltext dieser Seite</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
