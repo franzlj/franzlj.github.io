@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notizen · Franz</title>
+  <meta name="description" content="Notizen von Franz zu Mobile Apps, Software-Architektur, Homelab und Elektromobilität">
+  <link rel="stylesheet" href="../style.css?v=4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../notizen/" aria-current="page">Notizen</a>
+        <a href="../apps/">Mini-Apps</a>
+        <a href="../#ueber">Über mich</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <p class="eyebrow">Notizen</p>
+    <h1>Was ich baue und lerne</h1>
+    <p class="tagline">Artikel zu Apps, Architektur, Homelab und E-Autos. Die Einträge hier sind Skizzen für das neue Design.</p>
+    <div class="filter" role="group" aria-label="Nach Thema filtern">
+      <button type="button" aria-pressed="true" data-tag="">Alle</button><button type="button" aria-pressed="false" data-tag="3D">3D</button><button type="button" aria-pressed="false" data-tag="Architektur">Architektur</button><button type="button" aria-pressed="false" data-tag="E-Mobilität">E-Mobilität</button><button type="button" aria-pressed="false" data-tag="Mini-App">Mini-App</button><button type="button" aria-pressed="false" data-tag="Web">Web</button>
+    </div>
+    <ul class="post-list" id="posts">
+        <li data-tags="E-Mobilität Mini-App">
+          <a class="post-link" href="../notizen/ev-reichweite-rechnen/">
+            <span class="meta"><span class="status">Entwurf</span></span>
+            <span class="post-title">Reichweite eines E-Autos selbst rechnen</span>
+            <span class="post-desc">Kapazität, State of Health und Verbrauch: eine Formel, ein Faktor pro Jahreszeit und warum ich mit 80 % plane.</span>
+            <span class="post-tags"><span class="chip">E-Mobilität</span><span class="chip">Mini-App</span></span>
+          </a>
+        </li>
+        <li data-tags="Web Architektur">
+          <a class="post-link" href="../notizen/website-ohne-build/">
+            <span class="meta"><span class="status">Entwurf</span></span>
+            <span class="post-title">Eine Website ohne Build-Schritt</span>
+            <span class="post-desc">Warum diese Seite aus reinem HTML, CSS und JavaScript besteht, und wo das an Grenzen stößt.</span>
+            <span class="post-tags"><span class="chip">Web</span><span class="chip">Architektur</span></span>
+          </a>
+        </li>
+        <li data-tags="Web 3D">
+          <a class="post-link" href="../notizen/drahtgitter-baum/">
+            <span class="meta"><span class="status">Entwurf</span></span>
+            <span class="post-title">Ein Baum aus Drahtgitter</span>
+            <span class="post-desc">Wie der 3D-Baum auf der Startseite entsteht: rekursive Äste, ein fester Zufalls-Seed und eine Kamera, die dem Scrollen folgt.</span>
+            <span class="post-tags"><span class="chip">Web</span><span class="chip">3D</span></span>
+          </a>
+        </li>
+        <li class="planned"><span class="meta">geplant</span><span>Arc42 in der Praxis</span><span class="chip">Architektur</span></li>
+        <li class="planned"><span class="meta">geplant</span><span>Mein Homelab</span><span class="chip">Homelab</span></li>
+        <li class="planned"><span class="meta">geplant</span><span>Live Activities aus Home Assistant</span><span class="chip">Smart Home</span></li>
+    </ul>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+        <p>Mobile Apps, Software-Architektur, Homelab und Elektromobilität.</p>
+      </div>
+      <nav aria-labelledby="f-seiten">
+        <h2 id="f-seiten">Seiten</h2>
+        <ul>
+          <li><a href="../notizen/">Notizen</a></li>
+          <li><a href="../apps/">Mini-Apps</a></li>
+          <li><a href="../#ueber">Über mich</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-extern">
+        <h2 id="f-extern">Woanders</h2>
+        <ul>
+          <li><a href="https://github.com/franzlj">GitHub</a></li>
+          <li><a href="https://github.com/franzlj/franzlj.github.io">Quelltext dieser Seite</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <script src="notizen.js"></script>
+</body>
+</html>

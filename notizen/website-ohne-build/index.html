@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eine Website ohne Build-Schritt · Franz</title>
+  <meta name="description" content="Warum diese Seite aus reinem HTML, CSS und JavaScript besteht, und wo das an Grenzen stößt.">
+  <link rel="stylesheet" href="../../style.css?v=4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../../notizen/" aria-current="page">Notizen</a>
+        <a href="../../apps/">Mini-Apps</a>
+        <a href="../../#ueber">Über mich</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article">
+      <header class="article-head">
+        <a class="back" href="../">← Alle Notizen</a>
+        <h1>Eine Website ohne Build-Schritt</h1>
+        <p class="lead">Warum diese Seite aus reinem HTML, CSS und JavaScript besteht, und wo das an Grenzen stößt.</p>
+        <div class="meta"><span class="status">Entwurf</span><span>5 min Lesezeit</span><span class="chip">Web</span><span class="chip">Architektur</span></div>
+      </header>
+      <div class="prose">
+      <div class="note"><strong>Skizze</strong> · Dieser Artikel ist ein Entwurf, um Layout und Ton der Notizen zu zeigen.</div>
+      <p>Diese Seite besteht aus statischen Dateien: HTML, ein gemeinsames Stylesheet und etwas JavaScript pro Mini-App. Es gibt kein Framework, keinen Bundler und keinen Server-Code. GitHub Pages liefert das Repository direkt aus, jeder Merge auf <code>main</code> ist sofort online.</p>
+      <h2>Was dafür spricht</h2>
+      <ul>
+        <li>Jede Datei im Repository ist genau das, was der Browser lädt. Fehler lassen sich ohne Source Maps finden.</li>
+        <li>Keine Abhängigkeiten, die veralten. three.js liegt fest versioniert unter <code>vendor/</code>.</li>
+        <li>Eine Mini-App ist ein Ordner mit <code>index.html</code>, <code>app.css</code> und <code>app.js</code>.</li>
+      </ul>
+      <h2>Wo es hakt</h2>
+      <p>Ohne Build-Schritt gibt es kein Cache-Busting über Dateinamen. Ändert sich HTML, das neue CSS-Klassen braucht, hänge ich eine Version an:</p>
+      <pre><code>&lt;link rel="stylesheet" href="style.css?v=4"&gt;</code></pre>
+      <p>Kopfzeile und Fußzeile stehen in jeder Datei einzeln. Für ein paar Seiten ist das in Ordnung, für einen Blog mit vielen Artikeln nicht mehr.</p>
+      <h2>Der nächste Schritt</h2>
+      <p>Für die Notizen plane ich einen Static-Site-Generator, der Markdown in HTML umwandelt und nur in GitHub Actions läuft. Im Repository bleibt Quelltext, ausgeliefert wird weiterhin statisches HTML.</p>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Weitere Notizen"><a href="../ev-reichweite-rechnen/"><span class="meta">← Vorherige</span><span class="post-title">Reichweite eines E-Autos selbst rechnen</span></a><a href="../drahtgitter-baum/"><span class="meta">Nächste →</span><span class="post-title">Ein Baum aus Drahtgitter</span></a></nav>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+        <p>Mobile Apps, Software-Architektur, Homelab und Elektromobilität.</p>
+      </div>
+      <nav aria-labelledby="f-seiten">
+        <h2 id="f-seiten">Seiten</h2>
+        <ul>
+          <li><a href="../../notizen/">Notizen</a></li>
+          <li><a href="../../apps/">Mini-Apps</a></li>
+          <li><a href="../../#ueber">Über mich</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-extern">
+        <h2 id="f-extern">Woanders</h2>
+        <ul>
+          <li><a href="https://github.com/franzlj">GitHub</a></li>
+          <li><a href="https://github.com/franzlj/franzlj.github.io">Quelltext dieser Seite</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

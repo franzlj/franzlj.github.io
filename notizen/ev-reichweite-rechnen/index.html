@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reichweite eines E-Autos selbst rechnen · Franz</title>
+  <meta name="description" content="Kapazität, State of Health und Verbrauch: eine Formel, ein Faktor pro Jahreszeit und warum ich mit 80 % plane.">
+  <link rel="stylesheet" href="../../style.css?v=4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="../../notizen/" aria-current="page">Notizen</a>
+        <a href="../../apps/">Mini-Apps</a>
+        <a href="../../#ueber">Über mich</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article">
+      <header class="article-head">
+        <a class="back" href="../">← Alle Notizen</a>
+        <h1>Reichweite eines E-Autos selbst rechnen</h1>
+        <p class="lead">Kapazität, State of Health und Verbrauch: eine Formel, ein Faktor pro Jahreszeit und warum ich mit 80 % plane.</p>
+        <div class="meta"><span class="status">Entwurf</span><span>4 min Lesezeit</span><span class="chip">E-Mobilität</span><span class="chip">Mini-App</span></div>
+      </header>
+      <div class="prose">
+      <div class="note"><strong>Skizze</strong> · Dieser Artikel ist ein Entwurf, um Layout und Ton der Notizen zu zeigen. Text und Zahlen stammen aus dem <a href="../../apps/ev-reichweite/">EV Reichweitenrechner</a>.</div>
+      <p>Die Reichweite auf dem Datenblatt ist ein Laborwert. Für die Planung brauche ich drei Zahlen, die ich selbst kenne: die nutzbare Batteriekapazität, den Gesundheitszustand der Batterie (State of Health, SoH) und meinen tatsächlichen Verbrauch.</p>
+      <h2>Die Formel</h2>
+      <p class="formula">Reichweite = Netto-Kapazität × SoH ÷ Verbrauch × 100</p>
+      <p>Mit den Standardwerten des Rechners, 80,7 kWh netto, 97 % SoH und 19,5 kWh/100 km:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Schritt</th><th class="num">Wert</th></tr></thead>
+        <tbody>
+          <tr><td>Nutzbare Energie: 80,7 kWh × 97 %</td><td class="num">78,3 kWh</td></tr>
+          <tr><td>Reichweite 100 %: 78,3 kWh ÷ 19,5 kWh × 100</td><td class="num">401 km</td></tr>
+          <tr><td>Reichweite 80 %, mein Ladeziel im Alltag</td><td class="num">321 km</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Jahreszeiten als Faktor</h2>
+      <p>Im Winter steigt der Verbrauch durch Heizung und kalte Batterie. Der Rechner normiert den eingegebenen Verbrauch auf den Sommer und multipliziert ihn je Jahreszeit mit einem Faktor: Frühling 1,08, Sommer 1,00, Herbst 1,10, Winter 1,30. Die Faktoren sind Annahmen und lassen sich in der Tabelle ändern.</p>
+      <p>Mit Faktor 1,30 werden aus 19,5 im Winter 25,4 kWh/100 km, und die Reichweite fällt auf 309 km, bei 80 % auf 247 km.</p>
+      <blockquote>Offen für den fertigen Artikel: eigene Messwerte aus einem Jahr, getrennt nach Stadt und Autobahn.</blockquote>
+      </div>
+    </article>
+    <nav class="pager" aria-label="Weitere Notizen"><a href="../website-ohne-build/"><span class="meta">Nächste →</span><span class="post-title">Eine Website ohne Build-Schritt</span></a></nav>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="../../"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3 7 8v9l9 5 9-5V8z"/><path d="M7 8l9 5 9-5M16 13v9M7 17l9-4 9 4"/><path d="M16 22v7M12 29h8"/></svg>Franz</a>
+        <p>Mobile Apps, Software-Architektur, Homelab und Elektromobilität.</p>
+      </div>
+      <nav aria-labelledby="f-seiten">
+        <h2 id="f-seiten">Seiten</h2>
+        <ul>
+          <li><a href="../../notizen/">Notizen</a></li>
+          <li><a href="../../apps/">Mini-Apps</a></li>
+          <li><a href="../../#ueber">Über mich</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-extern">
+        <h2 id="f-extern">Woanders</h2>
+        <ul>
+          <li><a href="https://github.com/franzlj">GitHub</a></li>
+          <li><a href="https://github.com/franzlj/franzlj.github.io">Quelltext dieser Seite</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
