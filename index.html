@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Franz</title>
   <meta name="description" content="Franz – Mobile App Development, Software Architecture, Homelab, Smart Home, EVs">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
   <script type="module" src="assets/tree-stage.js"></script>
 </head>
 <body>
@@ -17,15 +17,19 @@
     <canvas role="img" aria-label="Drahtgittermodell eines Baums, die Ansicht kreist beim Scrollen um den Baum"></canvas>
   </div>
   <main>
-    <img class="avatar" src="https://avatars.githubusercontent.com/u/1780720?v=4" alt="Profilbild von Franz" width="120" height="120">
-    <div class="name-row">
-      <h1>Franz</h1>
-      <a class="icon-link" href="https://github.com/franzlj" aria-label="Drahtgittermodell eines Baums, die Ansicht kreist beim Scrollen um den Baum" title="GitHub">
-        <svg viewBox="0 0 16 16" width="26" height="26" aria-hidden="true" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
-      </a>
+    <div class="hero">
+      <img class="avatar" src="https://avatars.githubusercontent.com/u/1780720?v=4" alt="Profilbild von Franz" width="120" height="120">
+      <div class="hero-text">
+        <div class="name-row">
+          <h1>Franz</h1>
+          <a class="icon-link" href="https://github.com/franzlj" aria-label="GitHub-Profil von Franz" title="GitHub">
+            <svg viewBox="0 0 16 16" width="26" height="26" aria-hidden="true" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+          </a>
+        </div>
+        <p class="tagline roles">Mobile App Development · Software Architecture</p>
+      </div>
     </div>
-    <p class="tagline roles">Mobile App Development · Software Architecture</p>
-    <ul class="tags" aria-label="Drahtgittermodell eines Baums, die Ansicht kreist beim Scrollen um den Baum">
+    <ul class="tags" aria-label="Schwerpunkte">
       <li class="tag-tech" title="Technologie">Swift</li>
       <li class="tag-tech" title="Technologie">iOS</li>
       <li class="tag-method" title="Methode">DDD</li>
@@ -37,14 +41,65 @@
       <span class="tag-method">Methoden</span>
       <span class="tag-discipline">Disziplinen</span>
     </p>
-    <section>
-      <h2>Über mich</h2>
-      <p>
+    <section aria-labelledby="h-about">
+      <h2 class="eyebrow" id="h-about">Über mich</h2>
+      <p class="lead">
         Ich entwickle mobile Apps und beschäftige mich mit Software-Architektur.
         In meiner Freizeit betreibe ich ein Homelab, automatisiere mein Smart Home
         und interessiere mich für Elektromobilität.
       </p>
     </section>
+    <section aria-labelledby="h-focus">
+      <h2 class="eyebrow" id="h-focus">Woran ich arbeite</h2>
+      <ul class="focus-grid">
+        <li class="focus-card" style="--cat: var(--accent)">
+          <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+          <strong>Mobile Apps</strong>
+          <span>Native iOS-Apps mit Swift.</span>
+        </li>
+        <li class="focus-card" style="--cat: var(--cat-method)">
+          <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v2h11v-2M12 12v2"/></svg></span>
+          <strong>Software-Architektur</strong>
+          <span>Domain-Driven Design und Dokumentation mit Arc42.</span>
+        </li>
+        <li class="focus-card" style="--cat: var(--app-smarthome)">
+          <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/></svg></span>
+          <strong>Homelab & Smart Home</strong>
+          <span>Eigene Server und Automationen mit Home Assistant.</span>
+        </li>
+        <li class="focus-card" style="--cat: var(--app-emobil)">
+          <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <strong>Elektromobilität</strong>
+          <span>Reichweite, Ladekosten und Alltag mit dem E-Auto.</span>
+        </li>
+      </ul>
+    </section>
+    <section aria-labelledby="h-apps">
+      <div class="section-head">
+        <h2 class="eyebrow" id="h-apps">Mini-Apps</h2>
+        <a href="apps/">Alle ansehen →</a>
+      </div>
+      <ul class="app-grid">
+        <li style="--cat: var(--app-alltag)">
+          <a class="app-tile" href="apps/split-bill/">
+            <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h14V21l-2.33-1.5L14.33 21 12 19.5 9.67 21l-2.34-1.5L5 21z"/><path d="M8.5 7.5h7M8.5 11h7M8.5 14.5h4"/></svg></span>
+            <span class="app-tile-title">Split Bill</span>
+            <span class="app-tile-desc">Teilt gemeinsame Ausgaben auf und zeigt, wer wem wie viel zahlt.</span>
+          </a>
+        </li>
+        <li style="--cat: var(--app-emobil)">
+          <a class="app-tile" href="apps/ev-reichweite/">
+            <span class="app-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 18a9 9 0 1 1 15 0"/><path d="m12 13 3.5-4"/><circle cx="12" cy="13" r="1.2"/><path d="M7 18h10"/></svg></span>
+            <span class="app-tile-title">EV Reichweitenrechner</span>
+            <span class="app-tile-desc">Reichweite aus Batteriekapazität, SoH und Verbrauch, je Jahreszeit.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
+  <footer class="site-footer">
+    <span>© 2026 Franz · HTML, CSS und JavaScript, ohne Build-Schritt</span>
+    <a href="https://github.com/franzlj/franzlj.github.io">Quelltext auf GitHub</a>
+  </footer>
 </body>
 </html>
